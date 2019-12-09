@@ -7,6 +7,7 @@
 
 import Foundation
 import QuartzCore
+import UIKit
 
 /// Describes the behavior of an AnimationView when the app is moved to the background.
 public enum LottieBackgroundBehavior {
@@ -477,6 +478,32 @@ open class AnimationView: LottieView {
       sublayer.addSublayer(subViewLayer)
     }
   }
+    
+    open func replaceImage(_ image: UIImage, forLayerAt keypath: AnimationKeypath) {
+      guard let sublayer = animationLayer?.layer(for: keypath) else {
+        return
+      }
+      self.setNeedsLayout()
+      self.layoutIfNeeded()
+      self.forceDisplayUpdate()
+        sublayer.contents = image.cgImage
+    }
+    
+    open func replaceSubview(_ subview: AnimationSubview, forLayerAt keypath: AnimationKeypath) -> Bool {
+        guard let sublayer = animationLayer?.layer(for: keypath) else {
+            return false
+        }
+        subview.clipsToBounds = true
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        self.forceDisplayUpdate()
+        addSubview(subview)
+        if let subViewLayer = subview.viewLayer {
+            sublayer.contents = nil
+            sublayer.addSublayer(subViewLayer)
+        }
+        return true
+    }
   
   /**
    Converts a CGRect from the AnimationView's coordinate space into the
