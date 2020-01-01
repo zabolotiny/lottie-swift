@@ -441,6 +441,11 @@ open class AnimationView: LottieView {
     animationLayer?.logHierarchyKeypaths()
   }
   
+     //Full keypath array
+    open func findFullKeypaths(with key: String) -> [String]? {
+         return animationLayer?.findFullKeypaths(with: key)
+    }
+    
   // MARK: - open (Add Subview)
   
   /**

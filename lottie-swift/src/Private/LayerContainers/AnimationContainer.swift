@@ -44,6 +44,13 @@ final class AnimationContainer: CALayer {
   func forceDisplayUpdate() {
     animationLayers.forEach( { $0.displayWithFrame(frame: currentFrame, forceUpdates: true) })
   }
+    
+    ///Full keypath array
+    func findFullKeypaths(with string: String) -> [String] {
+        var resultingArray = [String]()
+        animationLayers.forEach( { resultingArray.append(contentsOf: $0.findKeypathNames(for: string)) })
+        return resultingArray
+    }
   
   func logHierarchyKeypaths() {
     print("Lottie: Logging Animation Keypaths")
