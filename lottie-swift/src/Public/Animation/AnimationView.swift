@@ -54,6 +54,9 @@ extension LottieLoopMode: Equatable {
 @IBDesignable
 open class AnimationView: LottieView {
   
+    ///Container for sub animations which were added as sublayers
+    var subAnimations = [AnimationView]()
+    
   // MARK: - open Properties
   
   /**
@@ -508,13 +511,16 @@ open class AnimationView: LottieView {
         subview.layer.frame = targetFrame
         subview.setNeedsLayout()
         subview.layoutIfNeeded()
+        addSubview(subview)
         for view in subview.subviews {
             view.frame = targetFrame
             view.layer.frame = targetFrame
             view.setNeedsLayout()
             view.layoutIfNeeded()
+            if let subAnimationView = view as? AnimationView {
+                subAnimations.append(subAnimationView)
+            }
         }
-        addSubview(subview)
         if let subViewLayer = subview.viewLayer {
             sublayer.contents = nil
             sublayer.addSublayer(subViewLayer)
@@ -893,6 +899,9 @@ open class AnimationView: LottieView {
         updateAnimationFrame(currentContext.playTo)
       }
     }
+    for subview in subAnimations {
+        subview.updateAnimationForBackgroundState()
+    }
   }
   
   fileprivate var waitingToPlayAimation: Bool = false
@@ -905,6 +914,9 @@ open class AnimationView: LottieView {
         /// Restore animation from saved state
         updateInFlightAnimation()
       }
+    }
+    for subview in subAnimations {
+        subview.updateAnimationForForegroundState()
     }
   }
   
@@ -951,7 +963,7 @@ open class AnimationView: LottieView {
     
     self.animationContext = animationContext
     
-    guard self.window != nil else { waitingToPlayAimation = true; return }
+    guard self.window != nil || (superview is AnimationSubview) else { waitingToPlayAimation = true; return }
     
     animationID = animationID + 1
     activeAnimationName = AnimationView.animationName + String(animationID)
