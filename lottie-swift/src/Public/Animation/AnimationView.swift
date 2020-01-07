@@ -505,22 +505,28 @@ open class AnimationView: LottieView {
         self.setNeedsLayout()
         self.layoutIfNeeded()
         self.forceDisplayUpdate()
-        let targetFrame = sublayer.bounds
         
-        subview.frame = targetFrame
-        subview.layer.frame = targetFrame
-        subview.setNeedsLayout()
-        subview.layoutIfNeeded()
-        addSubview(subview)
-        for view in subview.subviews {
-            view.frame = targetFrame
-            view.layer.frame = targetFrame
-            view.setNeedsLayout()
-            view.layoutIfNeeded()
-            if let subAnimationView = view as? AnimationView {
-                subAnimations.append(subAnimationView)
+        if !sublayer.bounds.isEmpty {
+            let targetFrame = sublayer.bounds
+            
+            subview.frame = targetFrame
+            subview.layer.frame = targetFrame
+            subview.setNeedsLayout()
+            subview.layoutIfNeeded()
+            addSubview(subview)
+            for view in subview.subviews {
+                view.frame = targetFrame
+                view.layer.frame = targetFrame
+                view.setNeedsLayout()
+                view.layoutIfNeeded()
+                if let subAnimationView = view as? AnimationView {
+                    subAnimations.append(subAnimationView)
+                }
             }
+        } else {
+            addSubview(subview)
         }
+        
         if let subViewLayer = subview.viewLayer {
             sublayer.contents = nil
             sublayer.addSublayer(subViewLayer)
