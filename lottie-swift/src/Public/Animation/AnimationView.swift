@@ -589,16 +589,18 @@ open class AnimationView: LottieView {
    - Parameter isEnabled: When true the animator nodes affect the rendering tree. When false the node is removed from the tree.
    - Parameter keypath: The keypath used to find the node(s).
    */
-  open func setNodeIsEnabled(isEnabled: Bool, keypath: AnimationKeypath) {
-    guard let animationLayer = animationLayer else { return }
-    let nodes = animationLayer.animatorNodes(for: keypath)
-    if let nodes = nodes {
-      for node in nodes {
-        node.isEnabled = isEnabled
-      }
-      self.forceDisplayUpdate()
+    public func setNodeIsEnabled(isEnabled: Bool, keypath: AnimationKeypath, displayUpdateImmediately: Bool = true) {
+        guard let animationLayer = animationLayer else { return }
+        let nodes = animationLayer.animatorNodes(for: keypath)
+        if let nodes = nodes {
+            for node in nodes {
+                node.isEnabled = isEnabled
+            }
+            if displayUpdateImmediately {
+                self.forceDisplayUpdate()
+            }
+        }
     }
-  }
   
   // MARK: - open (Markers)
   
