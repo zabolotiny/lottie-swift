@@ -1,8 +1,4 @@
 struct JNTDecoder;
-#include <map>
-#include <vector>
-#include <algorithm>
-#include <limits>
 
 #define JSON_TEST_NUMBERS
 /* auto-generated on Tue Jul 30 21:03:17 EDT 2019. Do not edit! */
@@ -36567,7 +36563,6 @@ public:
   ParsedJson();
   ~ParsedJson();
   ParsedJson(ParsedJson && p);
-  typedef std::pair<uint32_t, uint32_t> LocationPair;
 
   // if needed, allocate memory so that the object is able to process JSON
   // documents having up to len bytes and maxdepth "depth"
@@ -36599,16 +36594,6 @@ public:
   WARN_UNUSED
   bool dump_raw_tape(std::ostream &os);
 
-  really_inline uint32_t offsetForLocation(uint32_t location) {
-      // does it include the end of the iterator? what if the vector is empty?
-      LocationPair pair(location, 0);
-      LocationPair lowerBound = *std::lower_bound(location_to_offset.begin(), location_to_offset.end(), pair);
-      if (lowerBound.first == location) {
-          return lowerBound.second;
-      } else {
-          return ~0;
-      }
-  }
 
   // all nodes are stored on the tape using a 64-bit word.
   //
@@ -36634,10 +36619,9 @@ public:
       tape[current_loc++] = *(reinterpret_cast<uint64_t *>(&i));
   }
 
-  really_inline void write_tape_double(double d, uint32_t offset) {
+  really_inline void write_tape_double(double d) {
     write_tape(0, 'd');
     static_assert(sizeof(d) == sizeof(tape[current_loc]), "mismatch size");
-    location_to_offset.emplace_back(LocationPair(current_loc - 1, offset));
     memcpy(& tape[current_loc++], &d, sizeof(double));
     //tape[current_loc++] = *((uint64_t *)&d);
   }
@@ -36828,18 +36812,10 @@ public:
     // print the thing we're currently pointing at
     bool print(std::ostream &os, bool escape_strings = true) const;
     typedef struct {size_t start_of_scope; uint8_t scope_type;} scopeindex_t;
-      ParsedJson::iterator& operator=(const ParsedJson::iterator& o) {
-          this->depth = o.depth;
-          this->location = o.location;
-          this->tape_length = o.tape_length;
-          this->current_type = o.current_type;
-          this->current_val = o.current_val;
-          this->depthindex = o.depthindex;
-          return *this;
-      }
-
 
 private:
+    iterator& operator=(const iterator& other) = delete ;
+
     ParsedJson &pj;
     size_t depth;
     size_t location;     // our current location on a tape
@@ -36852,7 +36828,6 @@ private:
   size_t bytecapacity{0};  // indicates how many bits are meant to be supported
   bool full_precision_float_parsing = false;
 
-  std::vector<LocationPair> location_to_offset;
   size_t depthcapacity{0}; // how deep we can go
   size_t tapecapacity{0};
   size_t stringcapacity{0};
@@ -36879,7 +36854,7 @@ private :
  // we don't want the default constructor to be called
  ParsedJson(const ParsedJson & p) = delete; // we don't want the default constructor to be called
  // we don't want the assignment to be called
- //ParsedJson & operator=(const ParsedJson&o) = delete;
+ ParsedJson & operator=(const ParsedJson&o) = delete;
 };
 
 
@@ -36955,11 +36930,42 @@ void ParsedJson::iterator::move_to_value() {
     current_type = (current_val >> 56);
 }
 
+
+/*bool ParsedJson::iterator::move_to_key(const char * key) {
+    if(down()) {
+      do {
+        assert(is_string());
+        bool rightkey = (strcmp(get_string(),key)==0);// null chars would fool this
+        move_to_value();
+        if(rightkey) { 
+          return true;
+        }
+      } while(next());
+      assert(up());// not found
+    }
+    return false;
+}
+
+bool ParsedJson::iterator::move_to_key(const char * key, uint32_t length) {
+    if(down()) {
+      do {
+        assert(is_string());
+        bool rightkey = ((get_string_length() == length) && (memcmp(get_string(),key,length)==0));
+        move_to_value();
+        if(rightkey) { 
+          return true;
+        }
+      } while(next());
+      assert(up());// not found
+    }
+    return false;
+}*/
+
 bool ParsedJson::iterator::search_for_key(const char * key, size_t length) {
     bool hasHitEnd = false;
     uint32_t start_loc = location;
     do {
-        assert(is_string());
+        assert(is_string()); // todo: remove all asserts?
         bool rightkey = ((get_string_length() == length) && (memcmp(get_string(),key,length)==0));
         move_to_value();
         if(rightkey) {
@@ -38640,7 +38646,7 @@ parse_float(const uint8_t *const buf,
     return false;
   }
   double d = negative ? -i : i;
-  pj.write_tape_double(d, offset);
+  pj.write_tape_double(d);
 #ifdef JSON_TEST_NUMBERS // for unit testing
   foundFloat(d, buf + offset);
 #endif
@@ -38751,7 +38757,7 @@ static bool parse_full_precision_float(const uint8_t *const buf, const uint32_t 
         if (found_minus && result > 0) {
             result = -result;
         }
-        pj.write_tape_double(result, offset);
+        pj.write_tape_double(result);
 #ifdef JSON_TEST_NUMBERS // for unit testing
         foundFloat(result, buf + offset);
 #endif
@@ -38931,7 +38937,7 @@ static really_inline bool parse_number(const uint8_t *const buf,
     double factor = power_of_ten[powerindex];
     factor = negative ? -factor : factor;
     double d = i * factor;
-    pj.write_tape_double(d, offset);
+    pj.write_tape_double(d);
 #ifdef JSON_TEST_NUMBERS // for unit testing
     foundFloat(d, buf + offset);
 #endif
@@ -39090,7 +39096,7 @@ int unified_machine(const uint8_t *buf, size_t len, ParsedJson &pj) {
     }
     pj.write_tape(0, c);
     goto array_begin;
-// #define SIMDJSON_ALLOWANYTHINGINROOT
+#define SIMDJSON_ALLOWANYTHINGINROOT
     // A JSON text is a serialized value.  Note that certain previous
     // specifications of JSON constrained a JSON text to be an object or an
     // array.  Implementations that generate only objects or arrays where a
