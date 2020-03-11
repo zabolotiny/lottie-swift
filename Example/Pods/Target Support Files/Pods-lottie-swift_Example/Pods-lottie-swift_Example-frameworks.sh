@@ -161,9 +161,15 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/JJLISO8601DateFormatter-iOS/JJLISO8601DateFormatter.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZippyJSON-iOS/ZippyJSON.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZippyJSONCFamily-iOS/ZippyJSONCFamily.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios-iOS/Lottie.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/JJLISO8601DateFormatter-iOS/JJLISO8601DateFormatter.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZippyJSON-iOS/ZippyJSON.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ZippyJSONCFamily-iOS/ZippyJSONCFamily.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/lottie-ios-iOS/Lottie.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

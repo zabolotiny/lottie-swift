@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F435B517535155A15637FF3 /* Pods_lottie_swift_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23ECB37162FF8C4A2827EEC /* Pods_lottie_swift_tvOS.framework */; };
 		486E835F220A234C007CD915 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E835E220A234C007CD915 /* AppDelegate.swift */; };
 		486E8361220A234C007CD915 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486E8360220A234C007CD915 /* ViewController.swift */; };
 		486E8363220A234D007CD915 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 486E8362220A234D007CD915 /* Assets.xcassets */; };
@@ -54,7 +53,6 @@
 /* Begin PBXFileReference section */
 		0695C7B5BDA439EA2E490058 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		0FA33072181DEE06090A4BAD /* Pods-lottie-swift_macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lottie-swift_macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lottie-swift_macOS/Pods-lottie-swift_macOS.debug.xcconfig"; sourceTree = "<group>"; };
-		16612E9956D1E80B4E6196ED /* Pods-lottie-swift_tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lottie-swift_tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lottie-swift_tvOS/Pods-lottie-swift_tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		23A87FE847836C80F1A12E29 /* Pods_lottie_swift_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lottie_swift_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40ED9D991E74F17AC8F06E90 /* Pods-lottie-swift_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lottie-swift_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-lottie-swift_Tests/Pods-lottie-swift_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		486E8356220A2275007CD915 /* Pods_lottie_swift_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_lottie_swift_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,8 +94,6 @@
 		91240075B0C8FCDB8EE7FA52 /* lottie-ios.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "lottie-ios.podspec"; path = "../lottie-ios.podspec"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		990C0AA8A35456B23B51C127 /* Pods-lottie-swift_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lottie-swift_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-lottie-swift_Example/Pods-lottie-swift_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9BE45D36D5254BD996E95AB1 /* Pods-lottie-swift_macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lottie-swift_macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-lottie-swift_macOS/Pods-lottie-swift_macOS.release.xcconfig"; sourceTree = "<group>"; };
-		9C512735B8BB596E2E2D58CE /* Pods-lottie-swift_tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lottie-swift_tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-lottie-swift_tvOS/Pods-lottie-swift_tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		E23ECB37162FF8C4A2827EEC /* Pods_lottie_swift_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lottie_swift_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E82294C6B04BC5EF7FF4ED2E /* Pods-lottie-swift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lottie-swift_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lottie-swift_Tests/Pods-lottie-swift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EBE029188DBACE4177BA6CED /* Pods_lottie_swift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lottie_swift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -115,7 +111,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F435B517535155A15637FF3 /* Pods_lottie_swift_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,8 +142,6 @@
 				40ED9D991E74F17AC8F06E90 /* Pods-lottie-swift_Tests.release.xcconfig */,
 				0FA33072181DEE06090A4BAD /* Pods-lottie-swift_macOS.debug.xcconfig */,
 				9BE45D36D5254BD996E95AB1 /* Pods-lottie-swift_macOS.release.xcconfig */,
-				16612E9956D1E80B4E6196ED /* Pods-lottie-swift_tvOS.debug.xcconfig */,
-				9C512735B8BB596E2E2D58CE /* Pods-lottie-swift_tvOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -276,7 +269,6 @@
 				486E8356220A2275007CD915 /* Pods_lottie_swift_macOS.framework */,
 				EBE029188DBACE4177BA6CED /* Pods_lottie_swift_Example.framework */,
 				23A87FE847836C80F1A12E29 /* Pods_lottie_swift_Tests.framework */,
-				E23ECB37162FF8C4A2827EEC /* Pods_lottie_swift_tvOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -307,11 +299,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 486E8383220A2BB6007CD915 /* Build configuration list for PBXNativeTarget "lottie-swift_tvOS" */;
 			buildPhases = (
-				322D9F8EFCF8B5B52C137986 /* [CP] Check Pods Manifest.lock */,
 				486E8373220A2BB5007CD915 /* Sources */,
 				486E8374220A2BB5007CD915 /* Frameworks */,
 				486E8375220A2BB5007CD915 /* Resources */,
-				FDBE7F928D3C0C3F9DEBE218 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -510,33 +500,21 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-lottie-swift_macOS/Pods-lottie-swift_macOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/JJLISO8601DateFormatter-macOS/JJLISO8601DateFormatter.framework",
+				"${BUILT_PRODUCTS_DIR}/ZippyJSON-macOS/ZippyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/ZippyJSONCFamily-macOS/ZippyJSONCFamily.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios-macOS/Lottie.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JJLISO8601DateFormatter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZippyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZippyJSONCFamily.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-lottie-swift_macOS/Pods-lottie-swift_macOS-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		322D9F8EFCF8B5B52C137986 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-lottie-swift_tvOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7F1AAA6B793865A10C5907D8 /* [CP] Check Pods Manifest.lock */ = {
@@ -564,33 +542,21 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-lottie-swift_Example/Pods-lottie-swift_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/JJLISO8601DateFormatter-iOS/JJLISO8601DateFormatter.framework",
+				"${BUILT_PRODUCTS_DIR}/ZippyJSON-iOS/ZippyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/ZippyJSONCFamily-iOS/ZippyJSONCFamily.framework",
 				"${BUILT_PRODUCTS_DIR}/lottie-ios-iOS/Lottie.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JJLISO8601DateFormatter.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZippyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZippyJSONCFamily.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-lottie-swift_Example/Pods-lottie-swift_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FDBE7F928D3C0C3F9DEBE218 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-lottie-swift_tvOS/Pods-lottie-swift_tvOS-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/lottie-ios-tvOS/Lottie.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-lottie-swift_tvOS/Pods-lottie-swift_tvOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -744,7 +710,6 @@
 		};
 		486E8384220A2BB6007CD915 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 16612E9956D1E80B4E6196ED /* Pods-lottie-swift_tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -776,7 +741,6 @@
 		};
 		486E8385220A2BB6007CD915 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9C512735B8BB596E2E2D58CE /* Pods-lottie-swift_tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -852,6 +816,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -902,6 +867,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

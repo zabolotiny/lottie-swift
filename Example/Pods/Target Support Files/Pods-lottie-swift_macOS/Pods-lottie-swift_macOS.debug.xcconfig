@@ -1,9 +1,9 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios-macOS"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/JJLISO8601DateFormatter-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/ZippyJSON-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/ZippyJSONCFamily-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios-macOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios-macOS/Lottie.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/JJLISO8601DateFormatter-macOS/JJLISO8601DateFormatter.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ZippyJSON-macOS/ZippyJSON.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ZippyJSONCFamily-macOS/ZippyJSONCFamily.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios-macOS/Lottie.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -framework "AppKit" -framework "CoreGraphics" -framework "Lottie" -framework "QuartzCore"
+OTHER_LDFLAGS = $(inherited) -l"c++" -framework "AppKit" -framework "CoreGraphics" -framework "JJLISO8601DateFormatter" -framework "Lottie" -framework "QuartzCore" -framework "ZippyJSON" -framework "ZippyJSONCFamily"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

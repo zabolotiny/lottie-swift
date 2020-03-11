@@ -8,6 +8,11 @@
     "type": "Apache",
     "file": "LICENSE"
   },
+  "dependencies": {
+    "ZippyJSON": [
+
+    ]
+  },
   "authors": {
     "Brandon Withrow": "buba447@gmail.com"
   },
@@ -17,7 +22,7 @@
   },
   "swift_versions": "5.0",
   "platforms": {
-    "ios": "9.0",
+    "ios": "11.0",
     "osx": "10.10",
     "tvos": "9.0"
   },

@@ -1,16 +1,39 @@
 PODS:
-  - lottie-ios (3.1.6)
+  - JJLISO8601DateFormatter (0.1.2)
+  - lottie-ios (3.1.6):
+    - ZippyJSON
+  - ZippyJSON (1.1.1):
+    - JJLISO8601DateFormatter (~> 0.1.2)
+    - ZippyJSONCFamily (= 1.1.1)
+  - ZippyJSONCFamily (1.1.1)
 
 DEPENDENCIES:
   - lottie-ios (from `../`)
+  - ZippyJSON (from `https://github.com/michaeleisel/zippyjson`, branch `master`)
+
+SPEC REPOS:
+  trunk:
+    - JJLISO8601DateFormatter
+    - ZippyJSONCFamily
 
 EXTERNAL SOURCES:
   lottie-ios:
     :path: "../"
+  ZippyJSON:
+    :branch: master
+    :git: https://github.com/michaeleisel/zippyjson
+
+CHECKOUT OPTIONS:
+  ZippyJSON:
+    :commit: c380ac9e72d7991bda7a66a600b8309085304a15
+    :git: https://github.com/michaeleisel/zippyjson
 
 SPEC CHECKSUMS:
-  lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
+  JJLISO8601DateFormatter: 06a216365f6c8b0ec33a6ce3750d496f048efb32
+  lottie-ios: 0afecca9da684d9d7be36cf7f9cdc5f6d605e8a4
+  ZippyJSON: a5ce7c26901348f9155fde727d5cad2ad80ea096
+  ZippyJSONCFamily: 173595c0fa45185f22dee137c9188e17a51dcf21
 
-PODFILE CHECKSUM: 39996949d6fdb53021e9e6dfeaf254366502807f
+PODFILE CHECKSUM: b6222af2f56fccd4d870c630f5abb8fa66ea9167
 
 COCOAPODS: 1.8.4
