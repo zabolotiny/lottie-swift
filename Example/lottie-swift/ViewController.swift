@@ -17,7 +17,8 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     
     let animation = Animation.named("SpinnerLoader", subdirectory: "TestAnimations")
-    
+    let imageProvider = BundleImageProvider(bundle: Bundle.main, searchPath: "TestAnimations/images")
+    animationView.imageProvider = imageProvider
     animationView.animation = animation
     animationView.contentMode = .scaleAspectFit
     view.addSubview(animationView)
