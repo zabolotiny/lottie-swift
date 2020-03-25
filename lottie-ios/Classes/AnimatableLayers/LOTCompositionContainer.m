@@ -243,8 +243,9 @@
         if (![node isKindOfClass:[CALayer class]]) {
             continue;
         }
-        [(CALayer*)node setHidden:!isEnabled];
-        [node setAlpha:isEnabled ? 1.0 : 0.0];
+        CALayer *theNode = (CALayer*)node;
+        theNode.hidden = !isEnabled;
+        theNode.opacity = isEnabled ? 1.0 : 0.0;
     }
 }
 @end
