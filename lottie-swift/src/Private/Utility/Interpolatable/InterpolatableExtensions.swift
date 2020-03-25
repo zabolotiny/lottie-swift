@@ -9,7 +9,7 @@ import Foundation
 import CoreGraphics
 
 extension Vector1D: Interpolatable {
-  func interpolateTo(_ to: Vector1D, amount: CGFloat, spatialOutTangent: CGPoint?, spatialInTangent: CGPoint?) -> Vector1D {
+    public func interpolateTo(_ to: Vector1D, amount: CGFloat, spatialOutTangent: CGPoint?, spatialInTangent: CGPoint?) -> Vector1D {
     return value.interpolateTo(to.value, amount: amount).vectorValue
   }
 }
@@ -22,7 +22,7 @@ extension Vector2D: Interpolatable {
 }
 
 extension Vector3D: Interpolatable {
-  func interpolateTo(_ to: Vector3D, amount: CGFloat, spatialOutTangent: CGPoint?, spatialInTangent: CGPoint?) -> Vector3D {
+  public func interpolateTo(_ to: Vector3D, amount: CGFloat, spatialOutTangent: CGPoint?, spatialInTangent: CGPoint?) -> Vector3D {
     if spatialInTangent != nil || spatialOutTangent != nil {
       // TODO Support third dimension spatial interpolation
       let point = pointValue.interpolateTo(to.pointValue, amount: amount, spatialOutTangent: spatialOutTangent, spatialInTangent: spatialInTangent)
@@ -37,48 +37,6 @@ extension Vector3D: Interpolatable {
 }
 
 extension Color: Interpolatable {
-  
-  /// Initialize a new color with Hue Saturation and Value
-  init(h: Double, s: Double, v: Double, a: Double) {
-    
-    let i = floor(h * 6)
-    let f = h * 6 - i
-    let p = v * (1 - s);
-    let q = v * (1 - f * s)
-    let t = v * (1 - (1 - f) * s)
-    
-    switch (i.truncatingRemainder(dividingBy: 6)) {
-    case 0:
-      self.r = v
-      self.g = t
-      self.b = p
-    case 1:
-      self.r = q
-      self.g = v
-      self.b = p
-    case 2:
-      self.r = p
-      self.g = v
-      self.b = t
-    case 3:
-      self.r = p
-      self.g = q
-      self.b = v
-    case 4:
-      self.r = t
-      self.g = p
-      self.b = v
-    case 5:
-      self.r = v
-      self.g = p
-      self.b = q
-    default:
-      self.r = 0
-      self.g = 0
-      self.b = 0
-    }
-    self.a = a
-  }
   
   /// Hue Saturation Value of the color.
   var hsva: (h: Double, s: Double, v: Double, a: Double) {
@@ -104,14 +62,6 @@ extension Color: Interpolatable {
     return (h: h, s: s, v: v, a: a)
   }
   
-  init(y: Double, u: Double, v: Double, a: Double) {
-    // From https://www.fourcc.org/fccyvrgb.php
-    self.r = y + 1.403 * v
-    self.g = y - 0.344 * u
-    self.b = y + 1.770 * u
-    self.a = a
-  }
-  
   var yuv: (y: Double, u: Double, v: Double, a: Double) {
     /// From https://www.fourcc.org/fccyvrgb.php
     let y = 0.299 * r + 0.587 * g + 0.114 * b
@@ -120,7 +70,7 @@ extension Color: Interpolatable {
     return (y: y, u: u, v: v, a: a)
   }
   
-  func interpolateTo(_ to: Color, amount: CGFloat, spatialOutTangent: CGPoint?, spatialInTangent: CGPoint?) -> Color {
+  public func interpolateTo(_ to: Color, amount: CGFloat, spatialOutTangent: CGPoint?, spatialInTangent: CGPoint?) -> Color {
     return Color(r: r.interpolateTo(to.r, amount: amount),
                  g: g.interpolateTo(to.g, amount: amount),
                  b: b.interpolateTo(to.b, amount: amount),
@@ -159,7 +109,7 @@ extension TextDocument: Interpolatable {
 }
 
 extension Array: Interpolatable where Element == Double {
-  func interpolateTo(_ to: Array<Element>, amount: CGFloat, spatialOutTangent: CGPoint?, spatialInTangent: CGPoint?) -> Array<Element> {
+  public func interpolateTo(_ to: Array<Element>, amount: CGFloat, spatialOutTangent: CGPoint?, spatialInTangent: CGPoint?) -> Array<Element> {
     var returnArray = [Double]()
     for i in 0..<self.count {
       returnArray.append(self[i].interpolateTo(to[i], amount: amount))

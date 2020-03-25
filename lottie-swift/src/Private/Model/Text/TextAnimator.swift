@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class TextAnimator: Codable {
+final class TextAnimator: Codable, NSCoding {
   
   let name: String
   
@@ -96,4 +96,35 @@ final class TextAnimator: Codable {
     try animatorContainer.encodeIfPresent(strokeWidth, forKey: .strokeWidth)
     try animatorContainer.encodeIfPresent(tracking, forKey: .tracking)
   }
+    
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let name: String = aDecoder.decode(forKey: "name") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["name"])); fatalError() }; self.name = name
+        self.anchor = aDecoder.decode(forKey: "anchor")
+        self.position = aDecoder.decode(forKey: "position")
+        self.scale = aDecoder.decode(forKey: "scale")
+        self.skew = aDecoder.decode(forKey: "skew")
+        self.skewAxis = aDecoder.decode(forKey: "skewAxis")
+        self.rotation = aDecoder.decode(forKey: "rotation")
+        self.opacity = aDecoder.decode(forKey: "opacity")
+        self.strokeColor = aDecoder.decode(forKey: "strokeColor")
+        self.fillColor = aDecoder.decode(forKey: "fillColor")
+        self.strokeWidth = aDecoder.decode(forKey: "strokeWidth")
+        self.tracking = aDecoder.decode(forKey: "tracking")
+    }
+
+    /// :nodoc:
+    internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.name, forKey: "name")
+        aCoder.encode(self.anchor, forKey: "anchor")
+        aCoder.encode(self.position, forKey: "position")
+        aCoder.encode(self.scale, forKey: "scale")
+        aCoder.encode(self.skew, forKey: "skew")
+        aCoder.encode(self.skewAxis, forKey: "skewAxis")
+        aCoder.encode(self.rotation, forKey: "rotation")
+        aCoder.encode(self.opacity, forKey: "opacity")
+        aCoder.encode(self.strokeColor, forKey: "strokeColor")
+        aCoder.encode(self.fillColor, forKey: "fillColor")
+        aCoder.encode(self.strokeWidth, forKey: "strokeWidth")
+        aCoder.encode(self.tracking, forKey: "tracking")
+    }
 }

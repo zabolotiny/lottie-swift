@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum LineCap: Int, Codable {
+enum LineCap: Int, Codable, AutoCoding {
   case none
   case butt
   case round
   case square
 }
 
-enum LineJoin: Int, Codable {
+enum LineJoin: Int, Codable, AutoCoding {
   case none
   case miter
   case round
@@ -122,4 +122,39 @@ final class GradientStroke: ShapeItem {
     try container.encodeIfPresent(dashPattern, forKey: .dashPattern)
   }
   
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let opacity: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "opacity") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["opacity"])); fatalError() }; self.opacity = opacity
+        guard let startPoint: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "startPoint") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["startPoint"])); fatalError() }; self.startPoint = startPoint
+        guard let endPoint: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "endPoint") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["endPoint"])); fatalError() }; self.endPoint = endPoint
+        guard let gradientType: GradientType = aDecoder.decode(forKey: "gradientType") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["gradientType"])); fatalError() }; self.gradientType = gradientType
+        self.highlightLength = aDecoder.decode(forKey: "highlightLength")
+        self.highlightAngle = aDecoder.decode(forKey: "highlightAngle")
+        self.numberOfColors = aDecoder.decode(forKey: "numberOfColors")
+        guard let colors: KeyframeGroup<[Double]> = aDecoder.decode(forKey: "colors") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["colors"])); fatalError() }; self.colors = colors
+        guard let width: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "width") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["width"])); fatalError() }; self.width = width
+        guard let lineCap: LineCap = aDecoder.decode(forKey: "lineCap") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["lineCap"])); fatalError() }; self.lineCap = lineCap
+        guard let lineJoin: LineJoin = aDecoder.decode(forKey: "lineJoin") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["lineJoin"])); fatalError() }; self.lineJoin = lineJoin
+        self.miterLimit = aDecoder.decode(forKey: "miterLimit")
+        self.dashPattern = aDecoder.decode(forKey: "dashPattern")
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.opacity, forKey: "opacity")
+        aCoder.encode(self.startPoint, forKey: "startPoint")
+        aCoder.encode(self.endPoint, forKey: "endPoint")
+        aCoder.encode(self.gradientType, forKey: "gradientType")
+        aCoder.encode(self.highlightLength, forKey: "highlightLength")
+        aCoder.encode(self.highlightAngle, forKey: "highlightAngle")
+        aCoder.encode(self.numberOfColors, forKey: "numberOfColors")
+        aCoder.encode(self.colors, forKey: "colors")
+        aCoder.encode(self.width, forKey: "width")
+        aCoder.encode(self.lineCap, forKey: "lineCap")
+        aCoder.encode(self.lineJoin, forKey: "lineJoin")
+        aCoder.encode(self.miterLimit, forKey: "miterLimit")
+        aCoder.encode(self.dashPattern, forKey: "dashPattern")
+    }
 }

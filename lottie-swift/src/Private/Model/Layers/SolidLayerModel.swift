@@ -41,4 +41,18 @@ final class SolidLayerModel: LayerModel {
     try container.encode(height, forKey: .height)
   }
   
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let colorHex: String = aDecoder.decode(forKey: "colorHex") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["colorHex"])); fatalError() }; self.colorHex = colorHex
+        self.width = aDecoder.decode(forKey: "width")
+        self.height = aDecoder.decode(forKey: "height") 
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.colorHex, forKey: "colorHex")
+        aCoder.encode(self.width, forKey: "width")
+        aCoder.encode(self.height, forKey: "height")
+    }
 }

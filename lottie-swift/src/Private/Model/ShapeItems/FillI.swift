@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FillRule: Int, Codable {
+enum FillRule: Int, Codable, AutoCoding {
   case none
   case nonZeroWinding
   case evenOdd
@@ -46,4 +46,19 @@ final class Fill: ShapeItem {
     try container.encode(fillRule, forKey: .fillRule)
   }
   
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let opacity: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "opacity") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["opacity"])); fatalError() }; self.opacity = opacity
+        guard let color: KeyframeGroup<Color> = aDecoder.decode(forKey: "color") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["color"])); fatalError() }; self.color = color
+        guard let fillRule: FillRule = FillRule(rawValue: aDecoder.decode(forKey: "fillRule")) else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["fillRule"])); fatalError() }; self.fillRule = fillRule
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.opacity, forKey: "opacity")
+        aCoder.encode(self.color, forKey: "color")
+        aCoder.encode(self.fillRule.rawValue, forKey: "fillRule")
+    }
 }

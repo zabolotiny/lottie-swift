@@ -15,10 +15,27 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    let startTime = CFAbsoluteTimeGetCurrent()
+
+    let animation = Animation.named("11_level", subdirectory: "TestAnimations")
+//    let imageProvider = BundleImageProvider(bundle: Bundle.main, searchPath: "TestAnimations/images")
+//    do {
+//        let data = try NSKeyedArchiver.archivedData(withRootObject: animation, requiringSecureCoding: false)
+//        let fileURL = self.getFileURL()
+//        try data.write(to: fileURL)
+//    } catch {
+//        print(error)
+//    }
     
-    let animation = Animation.named("SpinnerLoader", subdirectory: "TestAnimations")
-    let imageProvider = BundleImageProvider(bundle: Bundle.main, searchPath: "TestAnimations/images")
-    animationView.imageProvider = imageProvider
+//    guard let data = try? Data(contentsOf: getFileURL()), let animation = try? NSKeyedUnarchiver.unarchiveObject(with: data) as? Animation else {
+//        return
+//    }
+//    let imageProvider = BundleImageProvider(bundle: Bundle.main, searchPath: "TestAnimations/images")
+    
+    let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+    print("Animation:: Time: \(timeElapsed)")
+    
+//    animationView.imageProvider = imageProvider
     animationView.animation = animation
     animationView.contentMode = .scaleAspectFit
     view.addSubview(animationView)
@@ -118,6 +135,14 @@ class ViewController: UIViewController {
 //      }
 //    }
   }
+    
+    func getFileURL() -> URL {
+        let fileName = "Test"
+        let DocumentDirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+
+        let fileURL = DocumentDirURL.appendingPathComponent(fileName).appendingPathExtension("data")
+        return fileURL
+    }
   
   var displayLink: CADisplayLink?
   

@@ -13,16 +13,6 @@ import QuartzCore
  Single value container. Needed because lottie sometimes wraps a Double in an array.
  */
 extension Vector1D: Codable {
-
-  public init(from decoder: Decoder) throws {
-    /// Try to decode an array of doubles
-    do {
-      var container = try decoder.unkeyedContainer()
-      self.value = try container.decode(Double.self)
-    } catch {
-      self.value = try decoder.singleValueContainer().decode(Double.self)
-    }
-  }
   
   public func encode(to encoder: Encoder) throws {
     var container = encoder.singleValueContainer()
@@ -44,7 +34,7 @@ extension Double {
 /**
  Needed for decoding json {x: y:} to a CGPoint
  */
-struct Vector2D: Codable {
+final class Vector2D: NSObject, Codable, NSCoding {
   
   var x: Double
   var y: Double
@@ -58,24 +48,36 @@ struct Vector2D: Codable {
     case x = "x"
     case y = "y"
   }
-  
-  init(from decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: Vector2D.CodingKeys.self)
     
-    do {
-      let xValue: [Double] = try container.decode([Double].self, forKey: .x)
-      self.x = xValue[0]
-    } catch {
-      self.x = try container.decode(Double.self, forKey: .x)
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        self.x = aDecoder.decode(forKey: "x")
+        self.y = aDecoder.decode(forKey: "y")
+    }
+
+    /// :nodoc:
+    internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.x, forKey: "x")
+        aCoder.encode(self.y, forKey: "y")
     }
     
-    do {
-      let yValue: [Double] = try container.decode([Double].self, forKey: .y)
-      self.y = yValue[0]
-    } catch {
-      self.y = try container.decode(Double.self, forKey: .y)
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Vector2D.CodingKeys.self)
+        
+        do {
+            let xValue: [Double] = try container.decode([Double].self, forKey: .x)
+            self.x = xValue[0]
+        } catch {
+            self.x = try container.decode(Double.self, forKey: .x)
+        }
+        
+        do {
+            let yValue: [Double] = try container.decode([Double].self, forKey: .y)
+            self.y = yValue[0]
+        } catch {
+            self.y = try container.decode(Double.self, forKey: .y)
+        }
     }
-  }
   
   func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: Vector2D.CodingKeys.self)
@@ -104,34 +106,6 @@ extension CGPoint {
  */
 
 extension Vector3D: Codable {
-
-  init(x: CGFloat, y: CGFloat, z: CGFloat) {
-    self.x = Double(x)
-    self.y = Double(y)
-    self.z = Double(z)
-  }
-  
-  public init(from decoder: Decoder) throws {
-    var container = try decoder.unkeyedContainer()
-    
-    if !container.isAtEnd {
-      self.x = try container.decode(Double.self)
-    } else {
-      self.x = 0
-    }
-    
-    if !container.isAtEnd {
-      self.y = try container.decode(Double.self)
-    } else {
-      self.y = 0
-    }
-    
-    if !container.isAtEnd {
-      self.z = try container.decode(Double.self)
-    } else {
-      self.z = 0
-    }
-  }
   
   public func encode(to encoder: Encoder) throws {
     var container = encoder.unkeyedContainer()

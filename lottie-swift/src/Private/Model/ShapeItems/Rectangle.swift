@@ -46,5 +46,23 @@ final class Rectangle: ShapeItem {
     try container.encode(size, forKey: .size)
     try container.encode(cornerRadius, forKey: .cornerRadius)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let direction: PathDirection = aDecoder.decode(forKey: "direction") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["direction"])); fatalError() }; self.direction = direction
+        guard let position: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "position") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["position"])); fatalError() }; self.position = position
+        guard let size: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "size") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["size"])); fatalError() }; self.size = size
+        guard let cornerRadius: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "cornerRadius") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["cornerRadius"])); fatalError() }; self.cornerRadius = cornerRadius
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.direction, forKey: "direction")
+        aCoder.encode(self.position, forKey: "position")
+        aCoder.encode(self.size, forKey: "size")
+        aCoder.encode(self.cornerRadius, forKey: "cornerRadius")
+    }
   
 }

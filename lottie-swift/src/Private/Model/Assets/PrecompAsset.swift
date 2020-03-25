@@ -27,4 +27,16 @@ final class PrecompAsset: Asset {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(layers, forKey: .layers)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let layers: [LayerModel] = aDecoder.decode(forKey: "layers") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["layers"])); fatalError() }; self.layers = layers
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.id, forKey: "id")
+        aCoder.encode(self.layers, forKey: "layers")
+    }
 }

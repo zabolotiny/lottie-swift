@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PathDirection: Int, Codable {
+enum PathDirection: Int, Codable, AutoCoding {
   case clockwise = 1
   case userSetClockwise = 2
   case counterClockwise = 3
@@ -46,5 +46,23 @@ final class Ellipse: ShapeItem {
     try container.encode(position, forKey: .position)
     try container.encode(size, forKey: .size)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let direction: PathDirection = PathDirection(rawValue: aDecoder.decode(forKey: "direction")) else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["direction"])); fatalError() }; self.direction = direction
+        guard let position: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "position") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["position"])); fatalError() }; self.position = position
+        guard let size: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "size") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["size"])); fatalError() }; self.size = size
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.name, forKey: "name")
+        aCoder.encode(self.type.rawValue, forKey: "type")
+        aCoder.encode(self.hidden, forKey: "hidden")
+        aCoder.encode(self.direction.rawValue, forKey: "direction")
+        aCoder.encode(self.position, forKey: "position")
+        aCoder.encode(self.size, forKey: "size")
+    }
   
 }

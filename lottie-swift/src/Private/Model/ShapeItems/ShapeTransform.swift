@@ -64,5 +64,31 @@ final class ShapeTransform: ShapeItem {
     try container.encode(skew, forKey: .skew)
     try container.encode(skewAxis, forKey: .skewAxis)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let anchor: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "anchor") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["anchor"])); fatalError() }; self.anchor = anchor
+        guard let position: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "position") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["position"])); fatalError() }; self.position = position
+        guard let scale: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "scale") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["scale"])); fatalError() }; self.scale = scale
+        guard let rotation: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "rotation") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["rotation"])); fatalError() }; self.rotation = rotation
+        guard let opacity: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "opacity") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["opacity"])); fatalError() }; self.opacity = opacity
+        guard let skew: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "skew") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["skew"])); fatalError() }; self.skew = skew
+        guard let skewAxis: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "skewAxis") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["skewAxis"])); fatalError() }; self.skewAxis = skewAxis
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.name, forKey: "name")
+        aCoder.encode(self.type.rawValue, forKey: "type")
+        aCoder.encode(self.hidden, forKey: "hidden")
+        aCoder.encode(self.anchor, forKey: "anchor")
+        aCoder.encode(self.position, forKey: "position")
+        aCoder.encode(self.scale, forKey: "scale")
+        aCoder.encode(self.rotation, forKey: "rotation")
+        aCoder.encode(self.opacity, forKey: "opacity")
+        aCoder.encode(self.skew, forKey: "skew")
+        aCoder.encode(self.skewAxis, forKey: "skewAxis")
+    }
   
 }

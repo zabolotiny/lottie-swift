@@ -8,11 +8,21 @@
 import Foundation
 import QuartzCore
 
-struct LayerDebugStyle {
+class LayerDebugStyle {
   let anchorColor: CGColor
   let boundsColor: CGColor
   let anchorWidth: CGFloat
   let boundsWidth: CGFloat
+    
+    init(anchorColor: CGColor,
+         boundsColor: CGColor,
+         anchorWidth: CGFloat,
+         boundsWidth: CGFloat){
+        self.anchorColor = anchorColor
+        self.boundsColor = boundsColor
+        self.anchorWidth = anchorWidth
+        self.boundsWidth = boundsWidth
+    }
 }
 
 protocol LayerDebugging {

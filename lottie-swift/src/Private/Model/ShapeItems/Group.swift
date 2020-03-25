@@ -28,5 +28,19 @@ final class Group: ShapeItem {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(items, forKey: .items)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let items: [ShapeItem] = aDecoder.decode(forKey: "items") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["items"])); fatalError() }; self.items = items
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.name, forKey: "name")
+        aCoder.encode(self.type.rawValue, forKey: "type")
+        aCoder.encode(self.hidden, forKey: "hidden")
+        aCoder.encode(self.items, forKey: "items")
+    }
 
 }

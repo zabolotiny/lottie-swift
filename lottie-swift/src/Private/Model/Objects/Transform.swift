@@ -8,7 +8,7 @@
 import Foundation
 
 /// The animatable transform for a layer. Controls position, rotation, scale, and opacity.
-final class Transform: Codable {
+final class Transform: NSObject, Codable, NSCoding {
   
   /// The anchor point of the transform.
   let anchorPoint: KeyframeGroup<Vector3D>
@@ -102,4 +102,31 @@ final class Transform: Codable {
     // Opacity
     self.opacity = try container.decodeIfPresent(KeyframeGroup<Vector1D>.self, forKey: .opacity) ?? KeyframeGroup(Vector1D(100))
   }
+    
+    // sourcery:inline:Transform.AutoCoding
+            /// :nodoc:
+            required internal init?(coder aDecoder: NSCoder) {
+                guard let anchorPoint: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "anchorPoint") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["anchorPoint"])); fatalError() }; self.anchorPoint = anchorPoint
+                self.position = aDecoder.decode(forKey: "position")
+                self.positionX = aDecoder.decode(forKey: "positionX")
+                self.positionY = aDecoder.decode(forKey: "positionY")
+                guard let scale: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "scale") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["scale"])); fatalError() }; self.scale = scale
+                guard let rotation: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "rotation") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["rotation"])); fatalError() }; self.rotation = rotation
+                guard let opacity: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "opacity") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["opacity"])); fatalError() }; self.opacity = opacity
+                self.rotationZ = aDecoder.decode(forKey: "rotationZ")
+            }
+
+            /// :nodoc:
+            internal func encode(with aCoder: NSCoder) {
+                aCoder.encode(self.anchorPoint, forKey: "anchorPoint")
+                aCoder.encode(self.position, forKey: "position")
+                aCoder.encode(self.positionX, forKey: "positionX")
+                aCoder.encode(self.positionY, forKey: "positionY")
+                aCoder.encode(self.scale, forKey: "scale")
+                aCoder.encode(self.rotation, forKey: "rotation")
+                aCoder.encode(self.opacity, forKey: "opacity")
+                aCoder.encode(self.rotationZ, forKey: "rotationZ")
+            }
+    // sourcery:end
+
 }

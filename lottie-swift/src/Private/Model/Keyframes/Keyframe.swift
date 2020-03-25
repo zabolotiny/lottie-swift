@@ -12,7 +12,7 @@ import CoreGraphics
  Keyframe represents a point in time and is the container for datatypes.
  Note: This is a parent class and should not be used directly.
  */
-final class Keyframe<T: Interpolatable> {
+final public class Keyframe<T: Interpolatable>: NSObject, NSCoding, AutoCoding {
   
   /// The value of the keyframe
   let value: T
@@ -59,6 +59,28 @@ final class Keyframe<T: Interpolatable> {
     self.spatialInTangent = spatialInTangent
     self.spatialOutTangent = spatialOutTangent
   }
+    
+    /// :nodoc:
+    required public init?(coder aDecoder: NSCoder) {
+        guard let value: T = aDecoder.decode(forKey: "value") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["value"])); fatalError() }; self.value = value
+        guard let time: CGFloat = aDecoder.decode(forKey: "time") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["time"])); fatalError() }; self.time = time
+        self.isHold = aDecoder.decode(forKey: "isHold")
+        self.inTangent = aDecoder.decode(forKey: "inTangent")
+        self.outTangent = aDecoder.decode(forKey: "outTangent")
+        self.spatialInTangent = aDecoder.decode(forKey: "spatialInTangent")
+        self.spatialOutTangent = aDecoder.decode(forKey: "spatialOutTangent")
+    }
+    
+    /// :nodoc:
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.value, forKey: "value")
+        aCoder.encode(self.time, forKey: "time")
+        aCoder.encode(self.isHold, forKey: "isHold")
+        aCoder.encode(self.inTangent, forKey: "inTangent")
+        aCoder.encode(self.outTangent, forKey: "outTangent")
+        aCoder.encode(self.spatialInTangent, forKey: "spatialInTangent")
+        aCoder.encode(self.spatialOutTangent, forKey: "spatialOutTangent")
+    }
   
 }
 
@@ -69,7 +91,7 @@ final class Keyframe<T: Interpolatable> {
  type of keyframea and also the version of the JSON. By parsing the raw data
  we can reconfigure it into a constant format.
  */
-final class KeyframeData<T: Codable>: Codable {
+final public class KeyframeData<T: Codable>: Codable, NSCoding {
   
   /// The start value of the keyframe
   let startValue: T?
@@ -125,4 +147,28 @@ final class KeyframeData<T: Codable>: Codable {
     }
     return false
   }
+    
+    /// :nodoc:
+    public required init?(coder aDecoder: NSCoder) {
+        self.startValue = aDecoder.decode(forKey: "startValue")
+        self.endValue = aDecoder.decode(forKey: "endValue")
+        self.time = aDecoder.decode(forKey: "time")
+        self.hold = aDecoder.decode(forKey: "hold")
+        self.inTangent = aDecoder.decode(forKey: "inTangent")
+        self.outTangent = aDecoder.decode(forKey: "outTangent")
+        self.spatialInTangent = aDecoder.decode(forKey: "spatialInTangent")
+        self.spatialOutTangent = aDecoder.decode(forKey: "spatialOutTangent")
+    }
+
+    /// :nodoc:
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.startValue, forKey: "startValue")
+        aCoder.encode(self.endValue, forKey: "endValue")
+        aCoder.encode(self.time, forKey: "time")
+        aCoder.encode(self.hold, forKey: "hold")
+        aCoder.encode(self.inTangent, forKey: "inTangent")
+        aCoder.encode(self.outTangent, forKey: "outTangent")
+        aCoder.encode(self.spatialInTangent, forKey: "spatialInTangent")
+        aCoder.encode(self.spatialOutTangent, forKey: "spatialOutTangent")
+    }
 }

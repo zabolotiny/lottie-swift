@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import ZippyJSON
 /**
  Used for coding/decoding a group of Keyframes by type.
  
@@ -15,7 +15,29 @@ import Foundation
  This helper object is needed to properly decode the json.
  */
 
-final class KeyframeGroup<T>: Codable where T: Codable, T: Interpolatable {
+final class KeyframeGroup<T>: NSObject, Codable, NSCoding where T: Codable, T: Interpolatable {
+    func encode(with coder: NSCoder) {
+        guard let encodedData = try? JSONEncoder().encode(self) else {
+            return
+        }
+        coder.encode(encodedData, forKey: "keyframes")
+    }
+    
+    init?(coder: NSCoder) {
+        guard let keyframesData = coder.decodeObject(forKey: "keyframes") as? Data else {
+            self.keyframes = ContiguousArray([Keyframe<T>]())
+            return
+        }
+        
+        do {
+            let keframeGroup = try JSONDecoder().decode(KeyframeGroup.self, from: keyframesData)
+            self.keyframes = keframeGroup.keyframes
+        } catch {
+            self.keyframes = ContiguousArray([Keyframe<T>]())
+            print(error)
+        }
+    }
+    
   
   let keyframes: ContiguousArray<Keyframe<T>>
   

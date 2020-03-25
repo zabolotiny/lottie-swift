@@ -44,5 +44,23 @@ public final class ImageAsset: Asset {
     try container.encode(width, forKey: .width)
     try container.encode(height, forKey: .height)
   }
+    
+    /// :nodoc:
+    required public init?(coder aDecoder: NSCoder) {
+        guard let name: String = aDecoder.decode(forKey: "name") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["name"])); fatalError() }; self.name = name
+        guard let directory: String = aDecoder.decode(forKey: "directory") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["directory"])); fatalError() }; self.directory = directory
+        self.width = aDecoder.decode(forKey: "width")
+        self.height = aDecoder.decode(forKey: "height")
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override public func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.id, forKey: "id")
+        aCoder.encode(self.name, forKey: "name")
+        aCoder.encode(self.directory, forKey: "directory")
+        aCoder.encode(self.width, forKey: "width")
+        aCoder.encode(self.height, forKey: "height")
+    }
 
 }

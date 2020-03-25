@@ -33,5 +33,18 @@ final class Shape: ShapeItem {
     try container.encode(path, forKey: .path)
     try container.encodeIfPresent(direction, forKey: .direction)
   }
+    
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let path: KeyframeGroup<BezierPath> = aDecoder.decode(forKey: "path") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["path"])); fatalError() }; self.path = path
+        self.direction = aDecoder.decode(forKey: "direction")
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.path, forKey: "path")
+        aCoder.encode(self.direction, forKey: "direction")
+    }
   
 }

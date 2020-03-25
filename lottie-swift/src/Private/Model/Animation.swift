@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum CoordinateSpace: Int, Codable {
+public enum CoordinateSpace: Int, Codable, AutoCoding {
   case type2d
   case type3d
 }
@@ -18,7 +18,7 @@ public enum CoordinateSpace: Int, Codable {
  An `Animation` holds all of the animation data backing a Lottie Animation.
  Codable, see JSON schema [here](https://github.com/airbnb/lottie-web/tree/master/docs/json).
  */
-public final class Animation: Codable {
+public final class Animation: NSObject, Codable, NSCoding {
   
   /// The version of the JSON Schema.
   let version: String
@@ -103,5 +103,80 @@ public final class Animation: Codable {
       self.markerMap = nil
     }
   }
+    
+    /// :nodoc:
+    required public init?(coder aDecoder: NSCoder) {
+        guard let version: String = aDecoder.decode(forKey: "version") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["version"])); fatalError() }; self.version = version
+        guard let type: CoordinateSpace = CoordinateSpace(rawValue: aDecoder.decode(forKey: "type"))  else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["type"])); fatalError() }; self.type = type
+        guard let startFrame: AnimationFrameTime = aDecoder.decode(forKey: "startFrame") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["startFrame"])); fatalError() }; self.startFrame = startFrame
+        guard let endFrame: AnimationFrameTime = aDecoder.decode(forKey: "endFrame") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["endFrame"])); fatalError() }; self.endFrame = endFrame
+        self.framerate = aDecoder.decodeDouble(forKey: "framerate")
+        self.width = aDecoder.decode(forKey: "width")
+        self.height = aDecoder.decode(forKey: "height")
+        guard let layers: [LayerModel] = aDecoder.decode(forKey: "layers") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["layers"])); fatalError() }; self.layers = layers
+        self.glyphs = aDecoder.decode(forKey: "glyphs")
+        self.fonts = aDecoder.decode(forKey: "fonts")
+        self.assetLibrary = aDecoder.decode(forKey: "assetLibrary")
+        self.markers = aDecoder.decode(forKey: "markers")
+        self.markerMap = aDecoder.decode(forKey: "markerMap")
+    }
+
+    /// :nodoc:
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.version, forKey: "version")
+        aCoder.encode(self.type.rawValue, forKey: "type")
+        aCoder.encode(self.startFrame, forKey: "startFrame")
+        aCoder.encode(self.endFrame, forKey: "endFrame")
+        aCoder.encode(self.framerate, forKey: "framerate")
+        aCoder.encode(self.width, forKey: "width")
+        aCoder.encode(self.height, forKey: "height")
+        aCoder.encode(self.layers, forKey: "layers")
+        aCoder.encode(self.glyphs, forKey: "glyphs")
+        aCoder.encode(self.fonts, forKey: "fonts")
+        aCoder.encode(self.assetLibrary, forKey: "assetLibrary")
+        aCoder.encode(self.markers, forKey: "markers")
+        aCoder.encode(self.markerMap, forKey: "markerMap")
+    }
+
+}
+
+extension NSCoder {
+
+    @nonobjc func decode(forKey: String) -> String? {
+        return self.maybeDecode(forKey: forKey) as String?
+    }
+
+//    @nonobjc func decode(forKey: String) -> TypeName? {
+//        return self.maybeDecode(forKey: forKey) as TypeName?
+//    }
+//
+//    @nonobjc func decode(forKey: String) -> AccessLevel? {
+//        return self.maybeDecode(forKey: forKey) as AccessLevel?
+//    }
+
+    @nonobjc func decode(forKey: String) -> Bool {
+        return self.decodeBool(forKey: forKey)
+    }
+
+    @nonobjc func decode(forKey: String) -> Int {
+        return self.decodeInteger(forKey: forKey)
+    }
+    
+    @nonobjc func decode(forKey: String) -> Double {
+        return self.decodeDouble(forKey: forKey)
+    }
+
+    func decode<E>(forKey: String) -> E? {
+        return maybeDecode(forKey: forKey) as E?
+    }
+
+    fileprivate func maybeDecode<E>(forKey: String) -> E? {
+        guard let object = self.decodeObject(forKey: forKey) else {
+            return nil
+        }
+
+        return object as? E
+    }
+    
 
 }

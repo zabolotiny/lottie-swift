@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class AssetLibrary: Codable {
+final class AssetLibrary: NSObject, Codable, NSCoding {
   
   /// The Assets
   let assets: [String : Asset]
@@ -45,4 +45,18 @@ final class AssetLibrary: Codable {
     var container = encoder.unkeyedContainer()
     try container.encode(contentsOf: Array(assets.values))
   }
+
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let assets: [String : Asset] = aDecoder.decode(forKey: "assets") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["assets"])); fatalError() }; self.assets = assets
+        guard let imageAssets: [String : ImageAsset] = aDecoder.decode(forKey: "imageAssets") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["imageAssets"])); fatalError() }; self.imageAssets = imageAssets
+        guard let precompAssets: [String : PrecompAsset] = aDecoder.decode(forKey: "precompAssets") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["precompAssets"])); fatalError() }; self.precompAssets = precompAssets
+    }
+
+    /// :nodoc:
+    internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.assets, forKey: "assets")
+        aCoder.encode(self.imageAssets, forKey: "imageAssets")
+        aCoder.encode(self.precompAssets, forKey: "precompAssets")
+    }
 }

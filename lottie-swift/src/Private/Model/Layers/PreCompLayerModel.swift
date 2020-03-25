@@ -46,5 +46,23 @@ final class PreCompLayerModel: LayerModel {
     try container.encode(width, forKey: .width)
     try container.encode(height, forKey: .height)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let referenceID: String = aDecoder.decode(forKey: "referenceID") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["referenceID"])); fatalError() }; self.referenceID = referenceID
+        self.timeRemapping = aDecoder.decode(forKey: "timeRemapping")
+        self.width = aDecoder.decode(forKey: "width")
+        self.height = aDecoder.decode(forKey: "height")
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.referenceID, forKey: "referenceID")
+        aCoder.encode(self.timeRemapping, forKey: "timeRemapping")
+        aCoder.encode(self.width, forKey: "width")
+        aCoder.encode(self.height, forKey: "height")
+    }
   
 }

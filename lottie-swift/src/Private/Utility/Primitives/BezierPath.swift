@@ -7,9 +7,10 @@
 
 import Foundation
 import CoreGraphics
+protocol AutoCoding { }
 
 /// A container that holds instructions for creating a single, unbroken Bezier Path.
-struct BezierPath {
+final class BezierPath {
   
   /// The elements of the path
   fileprivate(set) var elements: [PathElement]
@@ -26,6 +27,84 @@ struct BezierPath {
     self.length = 0
     self.closed = false
   }
+    
+    required init(from decoder: Decoder) throws {
+      let container: KeyedDecodingContainer<BezierPath.CodingKeys>
+      
+      if let keyedContainer = try? decoder.container(keyedBy: BezierPath.CodingKeys.self) {
+        container = keyedContainer
+      } else {
+        var unkeyedContainer = try decoder.unkeyedContainer()
+        container = try unkeyedContainer.nestedContainer(keyedBy: BezierPath.CodingKeys.self)
+      }
+      
+      self.closed = try container.decodeIfPresent(Bool.self, forKey: .closed) ?? true
+      
+      var vertexContainer = try container.nestedUnkeyedContainer(forKey: .vertices)
+      var inPointsContainer = try container.nestedUnkeyedContainer(forKey: .inPoints)
+      var outPointsContainer = try container.nestedUnkeyedContainer(forKey: .outPoints)
+      
+      guard vertexContainer.count == inPointsContainer.count, inPointsContainer.count == outPointsContainer.count else {
+        /// Will throw an error if vertex, inpoints, and outpoints are not the same length.
+        /// This error is to be expected.
+        throw DecodingError.dataCorruptedError(forKey: CodingKeys.vertices,
+                                               in: container,
+                                               debugDescription: "Vertex data does not match In Tangents and Out Tangents")
+      }
+      
+      guard let count = vertexContainer.count, count > 0 else {
+        self.length = 0
+        self.elements = []
+        return
+      }
+      
+      var decodedElements = [PathElement]()
+      
+      /// Create first point
+      let firstVertex = CurveVertex(point: try vertexContainer.decode(CGPoint.self),
+                                    inTangentRelative: try inPointsContainer.decode(CGPoint.self),
+                                    outTangentRelative: try outPointsContainer.decode(CGPoint.self))
+      var previousElement = PathElement(vertex: firstVertex)
+      decodedElements.append(previousElement)
+      
+      var totalLength: CGFloat = 0
+      while !vertexContainer.isAtEnd {
+        /// Get the next vertex data.
+        let vertex = CurveVertex(point: try vertexContainer.decode(CGPoint.self),
+                                 inTangentRelative: try inPointsContainer.decode(CGPoint.self),
+                                 outTangentRelative: try outPointsContainer.decode(CGPoint.self))
+        let pathElement = previousElement.pathElementTo(vertex)
+        decodedElements.append(pathElement)
+        previousElement = pathElement
+        totalLength = totalLength + pathElement.length
+      }
+      if closed {
+        let closeElement = previousElement.pathElementTo(firstVertex)
+        decodedElements.append(closeElement)
+        totalLength = totalLength + closeElement.length
+      }
+      self.length = totalLength
+      self.elements = decodedElements
+    }
+    
+    func encode(to encoder: Encoder) throws {
+      var container = encoder.container(keyedBy: BezierPath.CodingKeys.self)
+      try container.encode(closed, forKey: .closed)
+      
+      var vertexContainer = container.nestedUnkeyedContainer(forKey: .vertices)
+      var inPointsContainer = container.nestedUnkeyedContainer(forKey: .inPoints)
+      var outPointsContainer = container.nestedUnkeyedContainer(forKey: .outPoints)
+      
+      /// If closed path, ignore the final element.
+      let finalIndex = closed ? self.elements.endIndex - 1 : self.elements.endIndex
+      for i in 0..<finalIndex {
+        let element = elements[i]
+        try vertexContainer.encode(element.vertex.point)
+        try inPointsContainer.encode(element.vertex.inTangentRelative)
+        try outPointsContainer.encode(element.vertex.outTangentRelative)
+      }
+      
+    }
   
   init() {
     self.elements = []
@@ -33,12 +112,12 @@ struct BezierPath {
     self.closed = false
   }
   
-  mutating func moveToStartPoint(_ vertex: CurveVertex) {
+  func moveToStartPoint(_ vertex: CurveVertex) {
     self.elements = [PathElement(vertex: vertex)]
     self.length = 0
   }
   
-  mutating func addVertex(_ vertex: CurveVertex) {
+  func addVertex(_ vertex: CurveVertex) {
     guard let previous = elements.last else {
       addElement(PathElement(vertex: vertex))
       return
@@ -46,30 +125,30 @@ struct BezierPath {
     addElement(previous.pathElementTo(vertex))
   }
   
-  mutating func addCurve(toPoint: CGPoint, outTangent: CGPoint, inTangent: CGPoint) {
+  func addCurve(toPoint: CGPoint, outTangent: CGPoint, inTangent: CGPoint) {
     guard let previous = elements.last else { return }
     let newVertex = CurveVertex(inTangent, toPoint, toPoint)
     updateVertex(CurveVertex(previous.vertex.inTangent, previous.vertex.point, outTangent), atIndex: elements.endIndex - 1, remeasure: false)
     addVertex(newVertex)
   }
   
-  mutating func addLine(toPoint: CGPoint) {
+  func addLine(toPoint: CGPoint) {
     guard let previous = elements.last else { return }
     let newVertex = CurveVertex(point: toPoint, inTangentRelative: .zero, outTangentRelative: .zero)
     updateVertex(CurveVertex(previous.vertex.inTangent, previous.vertex.point, previous.vertex.point), atIndex: elements.endIndex - 1, remeasure: false)
     addVertex(newVertex)
   }
   
-  mutating func close() {
+  func close() {
     self.closed = true
   }
   
-  mutating func addElement(_ pathElement: PathElement) {
+  func addElement(_ pathElement: PathElement) {
     elements.append(pathElement)
     length = length + pathElement.length
   }
   
-  mutating func updateVertex(_ vertex: CurveVertex, atIndex: Int, remeasure: Bool) {
+  func updateVertex(_ vertex: CurveVertex, atIndex: Int, remeasure: Bool) {
     if remeasure {
       var newElement: PathElement
       if atIndex > 0 {
@@ -273,7 +352,7 @@ struct BezierPath {
   
 }
 
-extension BezierPath: Codable {
+extension BezierPath: Codable, AutoCoding {
   
   /**
    The BezierPath container is encoded and decoded from the JSON format
@@ -293,84 +372,6 @@ extension BezierPath: Codable {
     case inPoints = "i"
     case outPoints = "o"
     case vertices = "v"
-  }
-  
-  init(from decoder: Decoder) throws {
-    let container: KeyedDecodingContainer<BezierPath.CodingKeys>
-    
-    if let keyedContainer = try? decoder.container(keyedBy: BezierPath.CodingKeys.self) {
-      container = keyedContainer
-    } else {
-      var unkeyedContainer = try decoder.unkeyedContainer()
-      container = try unkeyedContainer.nestedContainer(keyedBy: BezierPath.CodingKeys.self)
-    }
-    
-    self.closed = try container.decodeIfPresent(Bool.self, forKey: .closed) ?? true
-    
-    var vertexContainer = try container.nestedUnkeyedContainer(forKey: .vertices)
-    var inPointsContainer = try container.nestedUnkeyedContainer(forKey: .inPoints)
-    var outPointsContainer = try container.nestedUnkeyedContainer(forKey: .outPoints)
-    
-    guard vertexContainer.count == inPointsContainer.count, inPointsContainer.count == outPointsContainer.count else {
-      /// Will throw an error if vertex, inpoints, and outpoints are not the same length.
-      /// This error is to be expected.
-      throw DecodingError.dataCorruptedError(forKey: CodingKeys.vertices,
-                                             in: container,
-                                             debugDescription: "Vertex data does not match In Tangents and Out Tangents")
-    }
-    
-    guard let count = vertexContainer.count, count > 0 else {
-      self.length = 0
-      self.elements = []
-      return
-    }
-    
-    var decodedElements = [PathElement]()
-    
-    /// Create first point
-    let firstVertex = CurveVertex(point: try vertexContainer.decode(CGPoint.self),
-                                  inTangentRelative: try inPointsContainer.decode(CGPoint.self),
-                                  outTangentRelative: try outPointsContainer.decode(CGPoint.self))
-    var previousElement = PathElement(vertex: firstVertex)
-    decodedElements.append(previousElement)
-    
-    var totalLength: CGFloat = 0
-    while !vertexContainer.isAtEnd {
-      /// Get the next vertex data.
-      let vertex = CurveVertex(point: try vertexContainer.decode(CGPoint.self),
-                               inTangentRelative: try inPointsContainer.decode(CGPoint.self),
-                               outTangentRelative: try outPointsContainer.decode(CGPoint.self))
-      let pathElement = previousElement.pathElementTo(vertex)
-      decodedElements.append(pathElement)
-      previousElement = pathElement
-      totalLength = totalLength + pathElement.length
-    }
-    if closed {
-      let closeElement = previousElement.pathElementTo(firstVertex)
-      decodedElements.append(closeElement)
-      totalLength = totalLength + closeElement.length
-    }
-    self.length = totalLength
-    self.elements = decodedElements
-  }
-  
-  func encode(to encoder: Encoder) throws {
-    var container = encoder.container(keyedBy: BezierPath.CodingKeys.self)
-    try container.encode(closed, forKey: .closed)
-    
-    var vertexContainer = container.nestedUnkeyedContainer(forKey: .vertices)
-    var inPointsContainer = container.nestedUnkeyedContainer(forKey: .inPoints)
-    var outPointsContainer = container.nestedUnkeyedContainer(forKey: .outPoints)
-    
-    /// If closed path, ignore the final element.
-    let finalIndex = closed ? self.elements.endIndex - 1 : self.elements.endIndex
-    for i in 0..<finalIndex {
-      let element = elements[i]
-      try vertexContainer.encode(element.vertex.point)
-      try inPointsContainer.encode(element.vertex.inTangentRelative)
-      try outPointsContainer.encode(element.vertex.outTangentRelative)
-    }
-    
   }
 }
 

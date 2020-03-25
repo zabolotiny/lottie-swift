@@ -76,5 +76,31 @@ final class Repeater: ShapeItem {
     try transformContainer.encode(anchorPoint, forKey: .anchorPoint)
     try transformContainer.encode(scale, forKey: .scale)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let copies: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "copies") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["copies"])); fatalError() }; self.copies = copies
+        guard let offset: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "offset") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["offset"])); fatalError() }; self.offset = offset
+        guard let startOpacity: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "startOpacity") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["startOpacity"])); fatalError() }; self.startOpacity = startOpacity
+        guard let endOpacity: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "endOpacity") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["endOpacity"])); fatalError() }; self.endOpacity = endOpacity
+        guard let rotation: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "rotation") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["rotation"])); fatalError() }; self.rotation = rotation
+        guard let anchorPoint: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "anchorPoint") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["anchorPoint"])); fatalError() }; self.anchorPoint = anchorPoint
+        guard let position: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "position") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["position"])); fatalError() }; self.position = position
+        guard let scale: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "scale") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["scale"])); fatalError() }; self.scale = scale
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.copies, forKey: "copies")
+        aCoder.encode(self.offset, forKey: "offset")
+        aCoder.encode(self.startOpacity, forKey: "startOpacity")
+        aCoder.encode(self.endOpacity, forKey: "endOpacity")
+        aCoder.encode(self.rotation, forKey: "rotation")
+        aCoder.encode(self.anchorPoint, forKey: "anchorPoint")
+        aCoder.encode(self.position, forKey: "position")
+        aCoder.encode(self.scale, forKey: "scale")
+    }
   
 }

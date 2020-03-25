@@ -44,7 +44,7 @@ public extension Animation {
     do {
       /// Decode animation.
       let json = try Data(contentsOf: url)
-      let animation = try ZippyJSONDecoder().decode(Animation.self, from: json)
+      let animation = try JSONDecoder().decode(Animation.self, from: json)
       animationCache?.setAnimation(animation, forKey: cacheKey)
       return animation
     } catch {
@@ -73,7 +73,7 @@ public extension Animation {
     do {
       /// Decode the animation.
       let json = try Data(contentsOf: URL(fileURLWithPath: filepath))
-      let animation = try ZippyJSONDecoder().decode(Animation.self, from: json)
+      let animation = try JSONDecoder().decode(Animation.self, from: json)
       animationCache?.setAnimation(animation, forKey: filepath)
       return animation
     } catch {
@@ -108,7 +108,7 @@ public extension Animation {
           return
         }
         do {
-          let animation = try ZippyJSONDecoder().decode(Animation.self, from: jsonData)
+          let animation = try JSONDecoder().decode(Animation.self, from: jsonData)
           DispatchQueue.main.async {
             animationCache?.setAnimation(animation, forKey: url.absoluteString)
             closure(animation)

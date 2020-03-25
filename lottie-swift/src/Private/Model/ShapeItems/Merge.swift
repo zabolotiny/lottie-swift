@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MergeMode: Int, Codable {
+enum MergeMode: Int, Codable, AutoCoding {
   case none
   case merge
   case add
@@ -37,5 +37,17 @@ final class Merge: ShapeItem {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(mode, forKey: .mode)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let mode: MergeMode = MergeMode(rawValue: aDecoder.decode(forKey: "mode")) else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["mode"])); fatalError() }; self.mode = mode
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.mode.rawValue, forKey: "mode")
+    }
   
 }

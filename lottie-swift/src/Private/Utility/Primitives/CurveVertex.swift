@@ -9,7 +9,7 @@ import Foundation
 import CoreGraphics
 
 /// A single vertex with an in and out tangent
-struct CurveVertex {
+final class CurveVertex {
   
   let point: CGPoint
   

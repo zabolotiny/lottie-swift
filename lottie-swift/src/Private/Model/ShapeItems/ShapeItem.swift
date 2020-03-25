@@ -46,7 +46,7 @@ extension ShapeType: ClassFamily {
   }
 }
 
-enum ShapeType: String, Codable {
+enum ShapeType: String, Codable, AutoCoding {
   case ellipse = "el"
   case fill = "fl"
   case gradientFill = "gf"
@@ -69,7 +69,7 @@ enum ShapeType: String, Codable {
 }
 
 /// An item belonging to a Shape Layer
-class ShapeItem: Codable {
+class ShapeItem: NSObject, Codable, NSCoding {
   
   /// The name of the shape
   let name: String
@@ -91,5 +91,19 @@ class ShapeItem: Codable {
     self.type = try container.decode(ShapeType.self, forKey: .type)
     self.hidden = try container.decodeIfPresent(Bool.self, forKey: .hidden) ?? false
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let name: String = aDecoder.decode(forKey: "name") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["name"])); fatalError() }; self.name = name
+        guard let type: ShapeType = ShapeType(rawValue: aDecoder.decode(forKey: "type")!)  else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["type"])); fatalError() }; self.type = type
+        self.hidden = aDecoder.decode(forKey: "hidden")
+    }
+
+    /// :nodoc:
+    internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.name, forKey: "name")
+        aCoder.encode(self.type.rawValue, forKey: "type")
+        aCoder.encode(self.hidden, forKey: "hidden")
+    }
 
 }

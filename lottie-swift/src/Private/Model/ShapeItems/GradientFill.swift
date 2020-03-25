@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GradientType: Int, Codable {
+enum GradientType: Int, Codable, AutoCoding {
   case none
   case linear
   case radial
@@ -82,5 +82,31 @@ final class GradientFill: ShapeItem {
     try colorsContainer.encode(numberOfColors, forKey: .numberOfColors)
     try colorsContainer.encode(colors, forKey: .colors)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let opacity: KeyframeGroup<Vector1D> = aDecoder.decode(forKey: "opacity") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["opacity"])); fatalError() }; self.opacity = opacity
+        guard let startPoint: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "startPoint") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["startPoint"])); fatalError() }; self.startPoint = startPoint
+        guard let endPoint: KeyframeGroup<Vector3D> = aDecoder.decode(forKey: "endPoint") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["endPoint"])); fatalError() }; self.endPoint = endPoint
+        guard let gradientType: GradientType = GradientType(rawValue: aDecoder.decode(forKey: "gradientType")) else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["gradientType"])); fatalError() }; self.gradientType = gradientType
+        self.highlightLength = aDecoder.decode(forKey: "highlightLength")
+        self.highlightAngle = aDecoder.decode(forKey: "highlightAngle")
+        self.numberOfColors = aDecoder.decode(forKey: "numberOfColors")
+        guard let colors: KeyframeGroup<[Double]> = aDecoder.decode(forKey: "colors") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["colors"])); fatalError() }; self.colors = colors
+        super.init(coder: aDecoder)
+    }
+
+    /// :nodoc:
+    override internal func encode(with aCoder: NSCoder) {
+        super.encode(with: aCoder)
+        aCoder.encode(self.opacity, forKey: "opacity")
+        aCoder.encode(self.startPoint, forKey: "startPoint")
+        aCoder.encode(self.endPoint, forKey: "endPoint")
+        aCoder.encode(self.gradientType.rawValue, forKey: "gradientType")
+        aCoder.encode(self.highlightLength, forKey: "highlightLength")
+        aCoder.encode(self.highlightAngle, forKey: "highlightAngle")
+        aCoder.encode(self.numberOfColors, forKey: "numberOfColors")
+        aCoder.encode(self.colors, forKey: "colors")
+    }
   
 }

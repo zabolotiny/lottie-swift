@@ -8,7 +8,7 @@
 import Foundation
 
 /// A model that holds a vector character
-final class Glyph: Codable {
+final class Glyph: Codable, NSCoding {
   
   /// The character
   let character: String
@@ -69,4 +69,24 @@ final class Glyph: Codable {
     var shapeContainer = container.nestedContainer(keyedBy: ShapeKey.self, forKey: .shapeWrapper)
     try shapeContainer.encode(shapes, forKey: .shapes)
   }
+    
+    /// :nodoc:
+    required internal init?(coder aDecoder: NSCoder) {
+        guard let character: String = aDecoder.decode(forKey: "character") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["character"])); fatalError() }; self.character = character
+        self.fontSize = aDecoder.decode(forKey: "fontSize")
+        guard let fontFamily: String = aDecoder.decode(forKey: "fontFamily") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["fontFamily"])); fatalError() }; self.fontFamily = fontFamily
+        guard let fontStyle: String = aDecoder.decode(forKey: "fontStyle") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["fontStyle"])); fatalError() }; self.fontStyle = fontStyle
+        self.width = aDecoder.decode(forKey: "width")
+        guard let shapes: [ShapeItem] = aDecoder.decode(forKey: "shapes") else { NSException.raise(NSExceptionName.parseErrorException, format: "Key '%@' not found.", arguments: getVaList(["shapes"])); fatalError() }; self.shapes = shapes
+    }
+
+    /// :nodoc:
+    internal func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.character, forKey: "character")
+        aCoder.encode(self.fontSize, forKey: "fontSize")
+        aCoder.encode(self.fontFamily, forKey: "fontFamily")
+        aCoder.encode(self.fontStyle, forKey: "fontStyle")
+        aCoder.encode(self.width, forKey: "width")
+        aCoder.encode(self.shapes, forKey: "shapes")
+    }
 }

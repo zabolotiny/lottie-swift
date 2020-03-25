@@ -17,7 +17,7 @@ import CoreGraphics
  of path data.
  
  */
-struct PathElement {
+class PathElement {
   /// The absolute Length of the path element.
   let length: CGFloat
   
