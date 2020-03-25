@@ -40,6 +40,9 @@
 - (void)maskSublayer:(nonnull CALayer *)subLayer
      toKeypathLayer:(nonnull LOTKeypath *)keypath;
 
+- (void)updateKeypathLayer:(nonnull LOTKeypath *)keypath
+                 asEnabled:(BOOL)isEnabled;
+
 @property (nonatomic, readonly, nonnull) NSArray<LOTLayerContainer *> *childLayers;
 @property (nonatomic, readonly, nonnull)  NSDictionary *childMap;
 

@@ -157,7 +157,7 @@
 - (CALayer *)_layerForKeypath:(nonnull LOTKeypath *)keypath {
   id node = _keypathCache[keypath.absoluteKeypath];
   if (node == nil) {
-    [self keysForKeyPath:keypath];
+    NSArray *keys = [self keysForKeyPath:keypath];
     node = _keypathCache[keypath.absoluteKeypath];
   }
   if (node == nil) {
@@ -236,4 +236,15 @@
   }
 }
 
+- (void)updateKeypathLayer:(nonnull LOTKeypath *)keypath asEnabled:(BOOL)isEnabled {
+    NSArray *keys = [self keysForKeyPath:keypath];
+    for (NSString *key in keys) {
+        id node = _keypathCache[key];
+        if (![node isKindOfClass:[CALayer class]]) {
+            continue;
+        }
+        [(CALayer*)node setHidden:!isEnabled];
+        [node setAlpha:isEnabled ? 1.0 : 0.0];
+    }
+}
 @end

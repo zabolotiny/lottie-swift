@@ -842,4 +842,7 @@ static NSString * const kCompContainerAnimationKey = @"play";
   }
 }
 
+- (void)updateKeypathLayer:(nonnull LOTKeypath *)keypath asEnabled:(BOOL)isEnabled {
+    [_compContainer updateKeypathLayer:keypath asEnabled:isEnabled];
+}
 @end

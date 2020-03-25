@@ -229,6 +229,11 @@ typedef void (^LOTAnimationCompletionBlock)(BOOL animationFinished);
       forKeypath:(nonnull NSString *)keypath
          atFrame:(nullable NSNumber *)frame __deprecated;
 
+/// Enables/Disables layers for keypath
+/// @param keypath - LOTKeypath . separate keypath The Keypath is a dot separated key path that specifies the location of the key to be set from the After Effects file. This will begin with the Layer Name. EG "Layer 1.Shape 1.Fill 1.Color"
+/// @param isEnabled - BOOL
+- (void)updateKeypathLayer:(nonnull LOTKeypath *)keypath asEnabled:(BOOL)isEnabled;
+
 /*!
  @brief Adds a custom subview to the animation using a LayerName from After Effect as a reference point.
  @discussion NOTE: Deprecated. Use addSubview:toKeypathLayer: or maskSubview:toKeypathLayer:
