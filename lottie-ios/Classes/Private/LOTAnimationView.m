@@ -120,9 +120,9 @@ static NSString * const kCompContainerAnimationKey = @"play";
 
 - (void)setAnimation:(NSString *)animationName {
     
-    _animation = animationName;
-    
-    [self setAnimationNamed:animationName];
+//    _animation = animationName;
+//
+//    [self setAnimationNamed:animationName];
     
 }
 
@@ -184,11 +184,11 @@ static NSString * const kCompContainerAnimationKey = @"play";
     [self _commonInit];
   }
   
-  _sceneModel = model;
-  _compContainer = [[LOTCompositionContainer alloc] initWithModel:nil inLayerGroup:nil withLayerGroup:_sceneModel.layerGroup withAssestGroup:_sceneModel.assetGroup];
-  [self.layer addSublayer:_compContainer];
-  [self _restoreState];
-  [self setNeedsLayout];
+//  _sceneModel = model;
+//  _compContainer = [[LOTCompositionContainer alloc] initWithModel:nil inLayerGroup:nil withLayerGroup:_sceneModel.layerGroup withAssestGroup:_sceneModel.assetGroup];
+//  [self.layer addSublayer:_compContainer];
+//  [self _restoreState];
+//  [self setNeedsLayout];
 }
 
 - (void)_restoreState {

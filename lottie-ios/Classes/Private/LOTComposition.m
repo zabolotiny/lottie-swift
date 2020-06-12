@@ -26,10 +26,7 @@
   }
   animationName = [animationName stringByDeletingPathExtension];
   
-  LOTComposition *comp = [[LOTAnimationCache sharedCache] animationForKey:animationName];
-  if (comp) {
-    return comp;
-  }
+    return nil;
   
   NSError *error;
   NSString *filePath = [bundle pathForResource:animationName ofType:@"json"];
@@ -44,10 +41,7 @@
   NSDictionary  *JSONObject = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData
                                                                          options:0 error:&error] : nil;
   if (JSONObject && !error) {
-    LOTComposition *laScene = [[self alloc] initWithJSON:JSONObject withAssetBundle:bundle];
-    [[LOTAnimationCache sharedCache] addAnimation:laScene forKey:animationName];
-    laScene.cacheKey = animationName;
-    return laScene;
+    return nil
   }
   NSLog(@"%s: Animation Not Found", __PRETTY_FUNCTION__);
   return nil;
@@ -56,10 +50,7 @@
 + (nullable instancetype)animationWithFilePath:(nonnull NSString *)filePath {
   NSString *animationName = filePath;
   
-  LOTComposition *comp = [[LOTAnimationCache sharedCache] animationForKey:animationName];
-  if (comp) {
-    return comp;
-  }
+    return nil;
   
   NSError *error;
   NSData *jsonData = [[NSData alloc] initWithContentsOfFile:filePath];
