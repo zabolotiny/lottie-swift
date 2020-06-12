@@ -10,6 +10,7 @@ end
 target 'lottie-swift_Example' do
   platform :ios, '11.0'
   pod 'ZippyJSON', :git => 'https://github.com/michaeleisel/zippyjson', :branch => 'master'
+  pod 'ZippyJSONCFamily', :git => 'https://github.com/michaeleisel/ZippyJSONCFamily', :branch => 'master'
   pod 'lottie-ios', :path => '../'
 
   target 'lottie-swift_Tests' do

@@ -16,7 +16,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let animation = Animation.named("LottieLogo1", subdirectory: "TestAnimations")
+    let animation = Animation.named("PinJump", subdirectory: "TestAnimations")
     
     animationView.animation = animation
     animationView.contentMode = .scaleAspectFit
@@ -148,7 +148,7 @@ class ViewController: UIViewController {
     super.viewDidAppear(animated)
     animationView.play(fromProgress: 0,
                        toProgress: 1,
-                       loopMode: LottieLoopMode.playOnce,
+                       loopMode: LottieLoopMode.repeat(1.0),
                        completion: { (finished) in
                         if finished {
                           print("Animation Complete")

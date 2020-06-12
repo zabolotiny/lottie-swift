@@ -11,7 +11,6 @@
 #endif
 
 #import "JSONSerialization.h"
-#import "JSONSerialization_Private.h"
 #import "Umbrella.h"
 
 FOUNDATION_EXPORT double ZippyJSONCFamilyVersionNumber;
