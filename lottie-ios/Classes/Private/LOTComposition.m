@@ -41,7 +41,7 @@
   NSDictionary  *JSONObject = jsonData ? [NSJSONSerialization JSONObjectWithData:jsonData
                                                                          options:0 error:&error] : nil;
   if (JSONObject && !error) {
-    return nil
+      return nil;
   }
   NSLog(@"%s: Animation Not Found", __PRETTY_FUNCTION__);
   return nil;
