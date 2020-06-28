@@ -1,6 +1,6 @@
 {
   "name": "ZippyJSONCFamily",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "summary": "Support lib for ZippyJSON",
   "description": "This is a library meant only to support ZippyJSON and provide a workaround for a Cocoapods issue. Please don't use this library directly.",
   "homepage": "https://github.com/michaeleisel/ZippyJSONCFamily",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/michaeleisel/ZippyJSONCFamily.git",
-    "tag": "1.1.1"
+    "tag": "1.2.0"
   },
   "platforms": {
     "ios": "11.0",

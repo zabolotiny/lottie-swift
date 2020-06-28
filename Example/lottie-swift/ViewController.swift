@@ -16,7 +16,10 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let animation = Animation.named("PinJump", subdirectory: "TestAnimations")
+    let startTime = CFAbsoluteTimeGetCurrent()
+    let animation = Animation.named("chest_with_diamonds2", subdirectory: "TestAnimations")
+    let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+    print("Time to render animation \(timeElapsed)")
     
     animationView.animation = animation
     animationView.contentMode = .scaleAspectFit
