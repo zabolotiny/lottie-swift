@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "486E8674220A3751007CD915"
                BuildableName = "libLottie.a"
-               BlueprintName = "LottieSwiftLibraryMacOS"
-               ReferencedContainer = "container:Lottie.xcodeproj">
+               BlueprintName = "LottieSwiftSwiftLibraryMacOS"
+               ReferencedContainer = "container:LottieSwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -52,8 +52,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "486E8674220A3751007CD915"
             BuildableName = "libLottie.a"
-            BlueprintName = "LottieSwiftLibraryMacOS"
-            ReferencedContainer = "container:Lottie.xcodeproj">
+            BlueprintName = "LottieSwiftSwiftLibraryMacOS"
+            ReferencedContainer = "container:LottieSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
