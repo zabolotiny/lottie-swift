@@ -1377,9 +1377,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		486E83B1220A317C007CD915 /* Lottie_iOS */ = {
+		486E83B1220A317C007CD915 /* Lottie_Swift_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 486E83B7220A317C007CD915 /* Build configuration list for PBXNativeTarget "Lottie_iOS" */;
+			buildConfigurationList = 486E83B7220A317C007CD915 /* Build configuration list for PBXNativeTarget "Lottie_Swift_iOS" */;
 			buildPhases = (
 				486E83AD220A317C007CD915 /* Headers */,
 				486E83AE220A317C007CD915 /* Sources */,
@@ -1390,14 +1390,14 @@
 			);
 			dependencies = (
 			);
-			name = Lottie_iOS;
+			name = Lottie_Swift_iOS;
 			productName = Lottie_iOS;
 			productReference = 486E83B2220A317C007CD915 /* Lottie.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		486E84E1220A357D007CD915 /* Lottie_tvOS */ = {
+		486E84E1220A357D007CD915 /* Lottie_Swift_tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 486E84E7220A357D007CD915 /* Build configuration list for PBXNativeTarget "Lottie_tvOS" */;
+			buildConfigurationList = 486E84E7220A357D007CD915 /* Build configuration list for PBXNativeTarget "Lottie_Swift_tvOS" */;
 			buildPhases = (
 				486E84DD220A357D007CD915 /* Headers */,
 				486E84DE220A357D007CD915 /* Sources */,
@@ -1408,14 +1408,14 @@
 			);
 			dependencies = (
 			);
-			name = Lottie_tvOS;
+			name = Lottie_Swift_tvOS;
 			productName = Lottie_tvOS;
 			productReference = 486E84E2220A357D007CD915 /* Lottie.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		486E8566220A3605007CD915 /* Lottie_macOS */ = {
+		486E8566220A3605007CD915 /* Lottie_Swift_macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 486E856C220A3606007CD915 /* Build configuration list for PBXNativeTarget "Lottie_macOS" */;
+			buildConfigurationList = 486E856C220A3606007CD915 /* Build configuration list for PBXNativeTarget "Lottie_Swift_macOS" */;
 			buildPhases = (
 				486E8562220A3605007CD915 /* Headers */,
 				486E8563220A3605007CD915 /* Sources */,
@@ -1426,14 +1426,14 @@
 			);
 			dependencies = (
 			);
-			name = Lottie_macOS;
+			name = Lottie_Swift_macOS;
 			productName = Lottie_macOS;
 			productReference = 486E8567220A3605007CD915 /* Lottie.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		486E85F2220A36F6007CD915 /* LottieLibraryIOS */ = {
+		486E85F2220A36F6007CD915 /* LottieSwiftLibraryIOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 486E85F7220A36F6007CD915 /* Build configuration list for PBXNativeTarget "LottieLibraryIOS" */;
+			buildConfigurationList = 486E85F7220A36F6007CD915 /* Build configuration list for PBXNativeTarget "LottieSwiftLibraryIOS" */;
 			buildPhases = (
 				486E85EF220A36F6007CD915 /* Sources */,
 				486E85F0220A36F6007CD915 /* Frameworks */,
@@ -1443,14 +1443,14 @@
 			);
 			dependencies = (
 			);
-			name = LottieLibraryIOS;
+			name = LottieSwiftLibraryIOS;
 			productName = LottieLibraryIOS;
 			productReference = 486E85F3220A36F6007CD915 /* libLottie.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		486E8674220A3751007CD915 /* LottieLibraryMacOS */ = {
+		486E8674220A3751007CD915 /* LottieSwiftLibraryMacOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 486E867B220A3751007CD915 /* Build configuration list for PBXNativeTarget "LottieLibraryMacOS" */;
+			buildConfigurationList = 486E867B220A3751007CD915 /* Build configuration list for PBXNativeTarget "LottieSwiftLibraryMacOS" */;
 			buildPhases = (
 				486E8671220A3751007CD915 /* Headers */,
 				486E8672220A3751007CD915 /* Sources */,
@@ -1460,7 +1460,7 @@
 			);
 			dependencies = (
 			);
-			name = LottieLibraryMacOS;
+			name = LottieSwiftLibraryMacOS;
 			productName = LottieLibraryMacOS;
 			productReference = 486E8675220A3751007CD915 /* libLottie.a */;
 			productType = "com.apple.product-type.library.static";
@@ -1506,11 +1506,11 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				486E83B1220A317C007CD915 /* Lottie_iOS */,
-				486E84E1220A357D007CD915 /* Lottie_tvOS */,
-				486E8566220A3605007CD915 /* Lottie_macOS */,
-				486E85F2220A36F6007CD915 /* LottieLibraryIOS */,
-				486E8674220A3751007CD915 /* LottieLibraryMacOS */,
+				486E83B1220A317C007CD915 /* Lottie_Swift_iOS */,
+				486E84E1220A357D007CD915 /* Lottie_Swift_tvOS */,
+				486E8566220A3605007CD915 /* Lottie_Swift_macOS */,
+				486E85F2220A36F6007CD915 /* LottieSwiftLibraryIOS */,
+				486E8674220A3751007CD915 /* LottieSwiftLibraryMacOS */,
 			);
 		};
 /* End PBXProject section */
@@ -2567,7 +2567,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		486E83B7220A317C007CD915 /* Build configuration list for PBXNativeTarget "Lottie_iOS" */ = {
+		486E83B7220A317C007CD915 /* Build configuration list for PBXNativeTarget "Lottie_Swift_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				486E83B8220A317C007CD915 /* Debug */,
@@ -2576,7 +2576,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		486E84E7220A357D007CD915 /* Build configuration list for PBXNativeTarget "Lottie_tvOS" */ = {
+		486E84E7220A357D007CD915 /* Build configuration list for PBXNativeTarget "Lottie_Swift_tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				486E84E8220A357D007CD915 /* Debug */,
@@ -2585,7 +2585,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		486E856C220A3606007CD915 /* Build configuration list for PBXNativeTarget "Lottie_macOS" */ = {
+		486E856C220A3606007CD915 /* Build configuration list for PBXNativeTarget "Lottie_Swift_macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				486E856D220A3606007CD915 /* Debug */,
@@ -2594,7 +2594,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		486E85F7220A36F6007CD915 /* Build configuration list for PBXNativeTarget "LottieLibraryIOS" */ = {
+		486E85F7220A36F6007CD915 /* Build configuration list for PBXNativeTarget "LottieSwiftLibraryIOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				486E85F8220A36F6007CD915 /* Debug */,
@@ -2603,7 +2603,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		486E867B220A3751007CD915 /* Build configuration list for PBXNativeTarget "LottieLibraryMacOS" */ = {
+		486E867B220A3751007CD915 /* Build configuration list for PBXNativeTarget "LottieSwiftLibraryMacOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				486E867C220A3751007CD915 /* Debug */,
