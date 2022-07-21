@@ -130,30 +130,31 @@ extension KeypathSearchable {
       child.logKeypaths(for: newKeypath, logger: logger)
     }
   }
-func findKeypathNames(for keyword: String?, storedKeypath: AnimationKeypath? = nil) -> [String] {
-var resulting = [String]()
-guard let unwrappedKeyword = keyword else {
-return resulting
-}
-let newKeypath: AnimationKeypath
-if let previousKeypath = storedKeypath {
-newKeypath = previousKeypath.appendingKey(keypathName)
-} else {
-newKeypath = AnimationKeypath(keys: [keypathName])
-}
-if newKeypath.fullPath.hasSuffix(unwrappedKeyword) {
-resulting.append(newKeypath.fullPath)
-}
-for key in keypathProperties.keys {
-if newKeypath.appendingKey(key).fullPath.hasSuffix(unwrappedKeyword) == true {
-resulting.append(newKeypath.appendingKey(key).fullPath)
-}
-}
-for child in childKeypaths {
-resulting.append(contentsOf: child.findKeypathNames(for: keyword, storedKeypath: newKeypath))
-}
-return resulting
-}
+    
+  func findKeypathNames(for keyword: String?, storedKeypath: AnimationKeypath? = nil) -> [String] {
+      var resulting = [String]()
+      guard let unwrappedKeyword = keyword else {
+            return resulting
+        }
+        let newKeypath: AnimationKeypath
+        if let previousKeypath = storedKeypath {
+            newKeypath = previousKeypath.appendingKey(keypathName)
+        } else {
+            newKeypath = AnimationKeypath(keys: [keypathName])
+        }
+        if newKeypath.fullPath.hasSuffix(unwrappedKeyword) {
+            resulting.append(newKeypath.fullPath)
+        }
+        for key in keypathProperties.keys {
+            if newKeypath.appendingKey(key).fullPath.hasSuffix(unwrappedKeyword) == true {
+                resulting.append(newKeypath.appendingKey(key).fullPath)
+            }
+        }
+        for child in childKeypaths {
+            resulting.append(contentsOf: child.findKeypathNames(for: keyword, storedKeypath: newKeypath))
+        }
+        return resulting
+  }
 }
 
 extension AnimationKeypath {
