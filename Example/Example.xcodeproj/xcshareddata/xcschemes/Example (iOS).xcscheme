@@ -30,8 +30,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2E80409927A0725D006E74CB"
                BuildableName = "Lottie.framework"
-               BlueprintName = "Lottie-iOS"
-               ReferencedContainer = "container:../Lottie.xcodeproj">
+               BlueprintName = "LottieSwift-iOS"
+               ReferencedContainer = "container:../LottieSwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,8 +49,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2E8040AB27A072B8006E74CB"
                BuildableName = "LottieTests.xctest"
-               BlueprintName = "LottieTests"
-               ReferencedContainer = "container:../Lottie.xcodeproj">
+               BlueprintName = "LottieSwiftTests"
+               ReferencedContainer = "container:../LottieSwift.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
