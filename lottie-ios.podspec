@@ -36,6 +36,6 @@ Lottie enables designers to create and ship beautiful animations without an engi
   s.ios.frameworks = ['UIKit', 'CoreGraphics', 'QuartzCore']
   s.tvos.frameworks = ['UIKit', 'CoreGraphics', 'QuartzCore']
   s.osx.frameworks = ['AppKit', 'CoreGraphics', 'QuartzCore']
-  s.module_name = 'Lottie'
-  s.header_dir = 'Lottie'
+  s.module_name = 'LottieSwift'
+  s.header_dir = 'LottieSwift'
 end
