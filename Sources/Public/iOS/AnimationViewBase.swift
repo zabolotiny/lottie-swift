@@ -11,7 +11,7 @@ import UIKit
 /// The base view for `AnimationView` on iOS, tvOS, watchOS, and macCatalyst.
 ///
 /// Enables the `AnimationView` implementation to be shared across platforms.
-public class AnimationViewBase: UIView {
+open class AnimationViewBase: UIView {
 
   // MARK: Public
 
