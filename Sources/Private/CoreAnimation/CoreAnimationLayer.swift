@@ -410,6 +410,13 @@ extension CoreAnimationLayer: RootAnimationLayer {
   func forceDisplayUpdate() {
     // Unimplemented / unused
   }
+    
+  ///Full keypath array
+  func findFullKeypaths(with string: String) -> [String] {
+      // Unimplemented / unused
+      return [String]()
+  }
+
 
   func logHierarchyKeypaths() {
     guard var configuration = pendingAnimationConfiguration?.animationConfiguration ?? currentAnimationConfiguration else {

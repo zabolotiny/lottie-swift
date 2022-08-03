@@ -39,6 +39,8 @@ protocol RootAnimationLayer: CALayer {
 
   func layer(for keypath: AnimationKeypath) -> CALayer?
   func animatorNodes(for keypath: AnimationKeypath) -> [AnimatorNode]?
+    ///Full keypath array
+  func findFullKeypaths(with string: String) -> [String]
 }
 
 // MARK: - AnimationKey

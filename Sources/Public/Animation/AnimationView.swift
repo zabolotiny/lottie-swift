@@ -334,7 +334,7 @@ open class AnimationView: AnimationViewBase {
   }
 
   /// Sets the speed of the animation playback. Defaults to 1
-  public var animationSpeed: CGFloat = 1 {
+  open var animationSpeed: CGFloat = 1 {
     didSet {
       updateInFlightAnimation()
     }
@@ -405,7 +405,8 @@ open class AnimationView: AnimationViewBase {
   /// Plays the animation from its current state to the end.
   ///
   /// - Parameter completion: An optional completion closure to be called when the animation completes playing.
-  public func play(completion: LottieCompletionBlock? = nil) {
+  open func play(completion: LottieCompletionBlock? = nil) {
+      
     guard let animation = animation else {
       return
     }
@@ -425,7 +426,7 @@ open class AnimationView: AnimationViewBase {
   /// - Parameter toProgress: The end progress of the animation.
   /// - Parameter loopMode: The loop behavior of the animation. If `nil` the view's `loopMode` property will be used.
   /// - Parameter completion: An optional completion closure to be called when the animation stops.
-  public func play(
+  open func play(
     fromProgress: AnimationProgressTime? = nil,
     toProgress: AnimationProgressTime,
     loopMode: LottieLoopMode? = nil,
@@ -446,6 +447,11 @@ open class AnimationView: AnimationViewBase {
       closure: completion)
     addNewAnimationForContext(context)
   }
+    
+    //Full keypath array
+   open func findFullKeypaths(with key: String) -> [String]? {
+        return animationLayer?.findFullKeypaths(with: key)
+   }
 
   /// Plays the animation from a start frame to an end frame in the animation's framerate.
   ///
@@ -453,7 +459,7 @@ open class AnimationView: AnimationViewBase {
   /// - Parameter toFrame: The end frame of the animation.
   /// - Parameter loopMode: The loop behavior of the animation. If `nil` the view's `loopMode` property will be used.
   /// - Parameter completion: An optional completion closure to be called when the animation stops.
-  public func play(
+  open func play(
     fromFrame: AnimationFrameTime? = nil,
     toFrame: AnimationFrameTime,
     loopMode: LottieLoopMode? = nil,
@@ -484,7 +490,7 @@ open class AnimationView: AnimationViewBase {
   /// - Parameter toMarker: The end marker for the animation playback.
   /// - Parameter loopMode: The loop behavior of the animation. If `nil` the view's `loopMode` property will be used.
   /// - Parameter completion: An optional completion closure to be called when the animation stops.
-  public func play(
+  open func play(
     fromMarker: String? = nil,
     toMarker: String,
     loopMode: LottieLoopMode? = nil,
@@ -518,7 +524,7 @@ open class AnimationView: AnimationViewBase {
   /// Stops the animation and resets the view to its start frame.
   ///
   /// The completion closure will be called with `false`
-  public func stop() {
+  open func stop() {
     removeCurrentAnimation()
     currentFrame = 0
   }
@@ -526,7 +532,7 @@ open class AnimationView: AnimationViewBase {
   /// Pauses the animation in its current state.
   ///
   /// The completion closure will be called with `false`
-  public func pause() {
+  open func pause() {
     removeCurrentAnimation()
   }
 
@@ -626,6 +632,32 @@ open class AnimationView: AnimationViewBase {
       sublayer.addSublayer(subViewLayer)
     }
   }
+    
+    open func replaceImage(_ image: UIImage, forLayerAt keypath: AnimationKeypath) {
+      guard let sublayer = animationLayer?.layer(for: keypath) else {
+        return
+      }
+      self.setNeedsLayout()
+      self.layoutIfNeeded()
+      self.forceDisplayUpdate()
+        sublayer.contents = image.cgImage
+    }
+    
+    open func replaceSubview(_ subview: AnimationSubview, forLayerAt keypath: AnimationKeypath) -> Bool {
+        guard let sublayer = animationLayer?.layer(for: keypath) else {
+            return false
+        }
+        subview.clipsToBounds = true
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        self.forceDisplayUpdate()
+        addSubview(subview)
+        if let subViewLayer = subview.viewLayer {
+            sublayer.contents = nil
+            sublayer.addSublayer(subViewLayer)
+        }
+        return true
+    }
 
   /// Converts a CGRect from the AnimationView's coordinate space into the
   /// coordinate space of the layer found at Keypath.
@@ -674,16 +706,18 @@ open class AnimationView: AnimationViewBase {
   ///
   /// - Parameter isEnabled: When true the animator nodes affect the rendering tree. When false the node is removed from the tree.
   /// - Parameter keypath: The keypath used to find the node(s).
-  public func setNodeIsEnabled(isEnabled: Bool, keypath: AnimationKeypath) {
-    guard let animationLayer = animationLayer else { return }
-    let nodes = animationLayer.animatorNodes(for: keypath)
-    if let nodes = nodes {
-      for node in nodes {
-        node.isEnabled = isEnabled
-      }
-      forceDisplayUpdate()
+    public func setNodeIsEnabled(isEnabled: Bool, keypath: AnimationKeypath, displayUpdateImmediately: Bool = true) {
+        guard let animationLayer = animationLayer else { return }
+        let nodes = animationLayer.animatorNodes(for: keypath)
+        if let nodes = nodes {
+            for node in nodes {
+                node.isEnabled = isEnabled
+            }
+            if displayUpdateImmediately {
+                self.forceDisplayUpdate()
+            }
+        }
     }
-  }
 
   /// Markers are a way to describe a point in time by a key name.
   ///
