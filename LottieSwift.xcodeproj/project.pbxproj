@@ -2411,7 +2411,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-iOS";
 				PRODUCT_NAME = LottieSwift;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2440,7 +2440,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-iOS";
 				PRODUCT_NAME = LottieSwift;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2508,7 +2508,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-macOs";
 				PRODUCT_NAME = LottieSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2538,7 +2538,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-macOs";
 				PRODUCT_NAME = LottieSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2566,7 +2566,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-tvOS";
 				PRODUCT_NAME = LottieSwift;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2596,7 +2596,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-tvOS";
 				PRODUCT_NAME = LottieSwift;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
