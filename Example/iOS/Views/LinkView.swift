@@ -35,11 +35,11 @@ final class LinkView: UIView, EpoxyableView {
   func setContent(_ content: Content, animated _: Bool) {
     group.setItems {
       if let animationName = content.animationName {
-        GroupItem<AnimationView>(
+        GroupItem<LottieAnimationView>(
           dataID: DataID.animationPreview,
           content: content.animationName,
           make: {
-            let animationView = AnimationView()
+            let animationView = LottieAnimationView()
             animationView.translatesAutoresizingMaskIntoConstraints = false
 
             NSLayoutConstraint.activate([
@@ -50,9 +50,18 @@ final class LinkView: UIView, EpoxyableView {
             return animationView
           },
           setContent: { context, _ in
-            context.constrainable.animation = .named(animationName)
-            context.constrainable.contentMode = .scaleAspectFit
-            context.constrainable.currentProgress = 0.5
+            if let animation = LottieAnimation.named(animationName) {
+              context.constrainable.animation = animation
+              context.constrainable.contentMode = .scaleAspectFit
+              context.constrainable.currentProgress = 0.5
+            } else {
+              DotLottieFile.named(animationName) { result in
+                guard case Result.success(let lottie) = result else { return }
+                context.constrainable.loadAnimation(from: lottie)
+                context.constrainable.contentMode = .scaleAspectFit
+                context.constrainable.currentProgress = 0.5
+              }
+            }
           })
       }
 

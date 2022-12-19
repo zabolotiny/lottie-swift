@@ -31,9 +31,15 @@ class AnimationPreviewViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
 
-    let animation = Animation.named(animationName)
+    if let animation = LottieAnimation.named(animationName) {
+      animationView.animation = animation
+    } else {
+      DotLottieFile.named(animationName) { [animationView] result in
+        guard case Result.success(let lottie) = result else { return }
+        animationView.loadAnimation(from: lottie)
+      }
+    }
 
-    animationView.animation = animation
     animationView.contentMode = .scaleAspectFit
     view.addSubview(animationView)
 
@@ -100,13 +106,14 @@ class AnimationPreviewViewController: UIViewController {
   // MARK: Private
 
   private let animationName: String
-  private let animationView = AnimationView()
+  private let animationView = LottieAnimationView()
   private let slider = UISlider()
   private let engineLabel = UILabel()
 
   private var displayLink: CADisplayLink?
 
   private var loopMode = LottieLoopMode.autoReverse
+  private var speed: CGFloat = 1
   private var fromProgress: AnimationProgressTime = 0
   private var toProgress: AnimationProgressTime = 1
 
@@ -138,6 +145,39 @@ class AnimationPreviewViewController: UIViewController {
               state: loopMode == .playOnce ? .on : .off,
               handler: { [unowned self] _ in
                 loopMode = .playOnce
+                updateAnimation()
+              }),
+          ]),
+
+        UIMenu(
+          title: "Speed",
+          children: [
+            UIAction(
+              title: "-100%",
+              state: speed == -1 ? .on : .off,
+              handler: { [unowned self] _ in
+                speed = -1
+                updateAnimation()
+              }),
+            UIAction(
+              title: "-50%",
+              state: speed == -0.5 ? .on : .off,
+              handler: { [unowned self] _ in
+                speed = -0.5
+                updateAnimation()
+              }),
+            UIAction(
+              title: "50%",
+              state: speed == 0.5 ? .on : .off,
+              handler: { [unowned self] _ in
+                speed = 0.5
+                updateAnimation()
+              }),
+            UIAction(
+              title: "100%",
+              state: speed == 1 ? .on : .off,
+              handler: { [unowned self] _ in
+                speed = 1
                 updateAnimation()
               }),
           ]),
@@ -205,6 +245,7 @@ class AnimationPreviewViewController: UIViewController {
 
   private func updateAnimation() {
     animationView.play(fromProgress: fromProgress, toProgress: toProgress, loopMode: loopMode)
+    animationView.animationSpeed = speed
     configureSettingsMenu()
   }
 

@@ -44,8 +44,7 @@ extension CALayer {
     keyframes: ContiguousArray<Keyframe<KeyframeValue>>,
     value keyframeValueMapping: (KeyframeValue) throws -> ValueRepresentation,
     context: LayerAnimationContext)
-    throws
-    -> CAAnimation?
+    throws -> CAAnimation?
   {
     guard !keyframes.isEmpty else { return nil }
 
@@ -82,13 +81,12 @@ extension CALayer {
 
   /// A `CAAnimation` that applies the custom value from the `AnyValueProvider`
   /// registered for this specific property's `AnimationKeypath`,
-  /// if one has been registered using `AnimationView.setValueProvider(_:keypath:)`.
+  /// if one has been registered using `LottieAnimationView.setValueProvider(_:keypath:)`.
   @nonobjc
   private func customizedAnimation<ValueRepresentation>(
     for property: LayerProperty<ValueRepresentation>,
     context: LayerAnimationContext)
-    throws
-    -> CAPropertyAnimation?
+    throws -> CAPropertyAnimation?
   {
     guard
       let customizableProperty = property.customizableProperty,
@@ -162,8 +160,7 @@ extension CALayer {
     animationSegments: [[Keyframe<KeyframeValue>]],
     value keyframeValueMapping: (KeyframeValue) throws -> ValueRepresentation,
     context: LayerAnimationContext)
-    throws
-    -> CAAnimationGroup
+    throws -> CAAnimationGroup
   {
     // Build the `CAKeyframeAnimation` for each segment of keyframes
     // with the same `CAAnimationCalculationMode`.
@@ -233,8 +230,8 @@ extension CALayer {
       NSNumber(value: Float(context.progressTime(for: keyframeModel.time)))
     }
 
-    var timingFunctions = self.timingFunctions(for: keyframes)
-    let calculationMode = self.calculationMode(for: keyframes)
+    var timingFunctions = timingFunctions(for: keyframes)
+    let calculationMode = calculationMode(for: keyframes)
 
     let animation = CAKeyframeAnimation(keyPath: property.caLayerKeypath)
 
@@ -321,7 +318,8 @@ extension CALayer {
   private func path<KeyframeValue>(
     keyframes positionKeyframes: [Keyframe<KeyframeValue>],
     value keyframeValueMapping: (KeyframeValue) throws -> CGPoint) rethrows
-    -> CGPath {
+    -> CGPath
+  {
     let path = CGMutablePath()
 
     for (index, keyframe) in positionKeyframes.enumerated() {
@@ -335,8 +333,7 @@ extension CALayer {
         if
           let controlPoint1 = keyframe.spatialOutTangent?.pointValue,
           let controlPoint2 = nextKeyframe.spatialInTangent?.pointValue,
-          controlPoint1 != .zero,
-          controlPoint2 != .zero
+          !(controlPoint1 == .zero && controlPoint2 == .zero)
         {
           path.addCurve(
             to: try keyframeValueMapping(nextKeyframe.value),

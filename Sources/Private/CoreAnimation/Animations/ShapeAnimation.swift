@@ -9,23 +9,38 @@ extension CAShapeLayer {
   func addAnimations(
     for shape: ShapeItem,
     context: LayerAnimationContext,
-    pathMultiplier: PathMultiplier) throws
+    pathMultiplier: PathMultiplier,
+    roundedCorners: RoundedCorners?) throws
   {
     switch shape {
     case let customShape as Shape:
-      try addAnimations(for: customShape.path, context: context, pathMultiplier: pathMultiplier)
+      try addAnimations(
+        for: customShape.path,
+        context: context,
+        pathMultiplier: pathMultiplier,
+        roundedCorners: roundedCorners)
 
     case let combinedShape as CombinedShapeItem:
       try addAnimations(for: combinedShape, context: context, pathMultiplier: pathMultiplier)
+      try context.compatibilityAssert(roundedCorners == nil, """
+        Rounded corners support is not currently implemented for combined shape items
+        """)
 
     case let ellipse as Ellipse:
       try addAnimations(for: ellipse, context: context, pathMultiplier: pathMultiplier)
 
     case let rectangle as Rectangle:
-      try addAnimations(for: rectangle, context: context, pathMultiplier: pathMultiplier)
+      try addAnimations(
+        for: rectangle,
+        context: context,
+        pathMultiplier: pathMultiplier,
+        roundedCorners: roundedCorners)
 
     case let star as Star:
       try addAnimations(for: star, context: context, pathMultiplier: pathMultiplier)
+      try context.compatibilityAssert(roundedCorners == nil, """
+        Rounded corners support is currently not implemented for polygon items
+        """)
 
     default:
       // None of the other `ShapeItem` subclasses draw a `path`
@@ -51,7 +66,7 @@ extension CAShapeLayer {
   /// Adds animations for `strokeStart` and `strokeEnd` from the given `Trim` object
   @nonobjc
   func addAnimations(for trim: Trim, context: LayerAnimationContext) throws -> PathMultiplier {
-    let (strokeStartKeyframes, strokeEndKeyframes, pathMultiplier) = try trim.caShapeLayerKeyframes(context: context)
+    let (strokeStartKeyframes, strokeEndKeyframes, pathMultiplier) = try trim.caShapeLayerKeyframes()
 
     try addAnimation(
       for: .strokeStart,
@@ -87,11 +102,12 @@ extension Trim {
   /// The `strokeStart` and `strokeEnd` keyframes to apply to a `CAShapeLayer`,
   /// plus a `pathMultiplier` that should be applied to the layer's `path` so that
   /// trim values larger than 100% can be displayed properly.
-  fileprivate func caShapeLayerKeyframes(context: LayerAnimationContext) throws
-    -> (strokeStart: KeyframeGroup<Vector1D>, strokeEnd: KeyframeGroup<Vector1D>, pathMultiplier: PathMultiplier)
+  fileprivate func caShapeLayerKeyframes()
+    throws
+    -> (strokeStart: KeyframeGroup<LottieVector1D>, strokeEnd: KeyframeGroup<LottieVector1D>, pathMultiplier: PathMultiplier)
   {
-    let strokeStart: KeyframeGroup<Vector1D>
-    let strokeEnd: KeyframeGroup<Vector1D>
+    let strokeStart: KeyframeGroup<LottieVector1D>
+    let strokeEnd: KeyframeGroup<LottieVector1D>
 
     // CAShapeLayer requires strokeStart to be less than strokeEnd. This
     // isn't required by the Lottie schema, so some animations may have
@@ -120,25 +136,34 @@ extension Trim {
     let interpolatedStrokeEnd = strokeEnd.manuallyInterpolateKeyframes()
     let interpolatedStrokeOffset = offset.manuallyInterpolateKeyframes()
 
-    let adjustedStrokeStart = try adjustKeyframesForTrimOffsets(
-      strokeKeyframes: interpolatedStrokeStart,
-      offsetKeyframes: interpolatedStrokeOffset,
-      context: context)
+    var adjustedStrokeStart = KeyframeGroup(
+      keyframes: try adjustKeyframesForTrimOffsets(
+        strokeKeyframes: interpolatedStrokeStart,
+        offsetKeyframes: interpolatedStrokeOffset))
 
-    let adjustedStrokeEnd = try adjustKeyframesForTrimOffsets(
-      strokeKeyframes: interpolatedStrokeEnd,
-      offsetKeyframes: interpolatedStrokeOffset,
-      context: context)
+    var adjustedStrokeEnd = KeyframeGroup(
+      keyframes: try adjustKeyframesForTrimOffsets(
+        strokeKeyframes: interpolatedStrokeEnd,
+        offsetKeyframes: interpolatedStrokeOffset))
 
     // If maximum stroke value is larger than 100%, then we have to create copies of the path
     // so the total path length includes the maximum stroke
-    let maximumStroke = adjustedStrokeEnd.map { $0.value.cgFloatValue }.max() ?? 100
-    let pathMultiplier = Int(ceil(maximumStroke / 100.0))
+    let startStrokes = adjustedStrokeStart.keyframes.map { $0.value.cgFloatValue }
+    let endStrokes = adjustedStrokeEnd.keyframes.map { $0.value.cgFloatValue }
+    let minimumStrokeMultiplier = Double(floor((startStrokes.min() ?? 0) / 100.0))
+    let maximumStrokeMultiplier = Double(ceil((endStrokes.max() ?? 100) / 100.0))
+
+    if minimumStrokeMultiplier < 0 {
+      // Core Animation doesn't support negative stroke offsets, so we have to
+      // shift all of the offset values up by the minimum
+      adjustedStrokeStart = adjustedStrokeStart.map { LottieVector1D($0.value + (abs(minimumStrokeMultiplier) * 100.0)) }
+      adjustedStrokeEnd = adjustedStrokeEnd.map { LottieVector1D($0.value + (abs(minimumStrokeMultiplier) * 100.0)) }
+    }
 
     return (
-      strokeStart: KeyframeGroup<Vector1D>(keyframes: adjustedStrokeStart),
-      strokeEnd: KeyframeGroup<Vector1D>(keyframes: adjustedStrokeEnd),
-      pathMultiplier: pathMultiplier)
+      strokeStart: adjustedStrokeStart,
+      strokeEnd: adjustedStrokeEnd,
+      pathMultiplier: Int(abs(maximumStrokeMultiplier) + abs(minimumStrokeMultiplier)))
   }
 
   // MARK: Private
@@ -153,8 +178,8 @@ extension Trim {
 
     for keyframeTime in keyframeTimes {
       guard
-        let startAtTime = startInterpolator.value(frame: keyframeTime) as? Vector1D,
-        let endAtTime = endInterpolator.value(frame: keyframeTime) as? Vector1D
+        let startAtTime = startInterpolator.value(frame: keyframeTime) as? LottieVector1D,
+        let endAtTime = endInterpolator.value(frame: keyframeTime) as? LottieVector1D
       else { continue }
 
       if startAtTime.cgFloatValue < endAtTime.cgFloatValue {
@@ -173,9 +198,9 @@ extension Trim {
   ///
   /// - Precondition: The keyframes must be interpolated using `KeyframeGroup.manuallyInterpolateKeyframes()`
   private func adjustKeyframesForTrimOffsets(
-    strokeKeyframes: ContiguousArray<Keyframe<Vector1D>>,
-    offsetKeyframes: ContiguousArray<Keyframe<Vector1D>>,
-    context _: LayerAnimationContext) throws -> ContiguousArray<Keyframe<Vector1D>>
+    strokeKeyframes: ContiguousArray<Keyframe<LottieVector1D>>,
+    offsetKeyframes: ContiguousArray<Keyframe<LottieVector1D>>)
+    throws -> ContiguousArray<Keyframe<LottieVector1D>>
   {
     guard
       !strokeKeyframes.isEmpty,
@@ -185,7 +210,7 @@ extension Trim {
     }
 
     // Map each time to its corresponding stroke/offset keyframe
-    var timeMap = [AnimationFrameTime: [Keyframe<Vector1D>?]]()
+    var timeMap = [AnimationFrameTime: [Keyframe<LottieVector1D>?]]()
     for stroke in strokeKeyframes {
       timeMap[stroke.time] = [stroke, nil]
     }
@@ -199,9 +224,9 @@ extension Trim {
     }
 
     // Each time will be mapped to a new, adjusted keyframe
-    var output = ContiguousArray<Keyframe<Vector1D>>()
-    var lastKeyframe: Keyframe<Vector1D>?
-    var lastOffset: Keyframe<Vector1D>?
+    var output = ContiguousArray<Keyframe<LottieVector1D>>()
+    var lastKeyframe: Keyframe<LottieVector1D>?
+    var lastOffset: Keyframe<LottieVector1D>?
 
     for (time, values) in timeMap.sorted(by: { $0.0 < $1.0 }) {
       // Extract keyframe/offset associated with this timestamp
@@ -229,8 +254,8 @@ extension Trim {
       let adjustedValue = strokeValue + (offsetValue / 360 * 100)
 
       // The tangent values are all `nil` as the keyframes should have been manually interpolated
-      let adjustedKeyframe = Keyframe<Vector1D>(
-        value: Vector1D(adjustedValue),
+      let adjustedKeyframe = Keyframe<LottieVector1D>(
+        value: LottieVector1D(adjustedValue),
         time: time,
         isHold: currentKeyframe.isHold,
         inTangent: nil,

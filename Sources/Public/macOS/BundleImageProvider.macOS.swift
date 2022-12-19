@@ -29,7 +29,6 @@ public class BundleImageProvider: AnimationImageProvider {
   // MARK: Public
 
   public func imageForAsset(asset: ImageAsset) -> CGImage? {
-
     if
       let data = Data(imageAsset: asset),
       let image = NSImage(data: data)
@@ -65,7 +64,7 @@ public class BundleImageProvider: AnimationImageProvider {
 
     guard let foundPath = imagePath, let image = NSImage(contentsOfFile: foundPath) else {
       /// No image found.
-      LottieLogger.shared.assertionFailure("Could not find image \"\(asset.name)\" in bundle")
+      LottieLogger.shared.warn("Could not find image \"\(asset.name)\" in bundle")
       return nil
     }
     return image.lottie_CGImage

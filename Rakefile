@@ -92,19 +92,8 @@ end
 
 namespace :lint do
   desc 'Lints swift files'
-  task swift: ['swift:swiftlint', 'swift:swiftformat']
-
-  desc 'Lints swift files'
-  namespace :swift do
-    desc 'Lints swift files using SwiftLint'
-    task :swiftlint do
-      sh 'mint run SwiftLint lint Sources Tests Example Package.swift --config script/lint/swiftlint.yml --strict'
-    end
-
-    desc 'Lints swift files using SwiftLint'
-    task :swiftformat do
-      sh 'mint run SwiftFormat Sources Tests Example Package.swift --config script/lint/airbnb.swiftformat --lint'
-    end
+  task :swift do
+    formatTool('format --lint')
   end
 
   desc 'Lints the CocoaPods podspec'
@@ -114,13 +103,58 @@ namespace :lint do
 end
 
 namespace :format do
-  desc 'Runs SwiftFormat'
+  desc 'Formats swift files'
   task :swift do
-    sh 'mint run SwiftLint autocorrect Sources Tests Example Package.swift --config script/lint/swiftlint.yml'
-    sh 'mint run SwiftFormat Sources Tests Example Package.swift --config script/lint/airbnb.swiftformat'
+    formatTool('format')
   end
 end
 
 def xcodebuild(command)
-  sh "set -o pipefail && xcodebuild #{command} | mint run xcbeautify"
+  # Check if the mint tool is installed -- if so, pipe the xcodebuild output through xcbeautify
+  `which mint`
+
+  if $?.success?
+    sh "set -o pipefail && xcodebuild #{command} | mint run thii/xcbeautify@0.10.2"
+  else
+    sh "xcodebuild #{command}"
+  end
+end
+
+def formatTool(command)
+  # As of Xcode 13.4 / Xcode 14 beta 4, including airbnb/swift as a dependency
+  # causes Xcode to spin indefinitely at 100% CPU (due to the remote binary dependencies
+  # used by that package). As a workaround, we can specifically add that dependency
+  # to our Package.swift file when linting / formatting and remove it afterwards.
+  packageDefinition = File.read('Package.swift')
+  packageDefinitionWithFormatDependency = packageDefinition +
+  <<~EOC
+  
+  #if swift(>=5.6)
+  // Add the Airbnb Swift formatting plugin if possible
+  package.dependencies.append(
+    .package(
+      url: "https://github.com/airbnb/swift",
+      // Since we don't have a Package.resolved for this, we need to reference a specific commit
+      // so changes to the style guide don't cause this repo's checks to start failing.
+      .revision("7884f265499752cc5eccaa9eba08b4a2f8b73357")))
+  #endif
+  EOC
+
+  # Add the format tool dependency to our Package.swift
+  File.write('Package.swift', packageDefinitionWithFormatDependency)
+
+  exitCode = 0
+
+  # Run the given command
+  begin
+    sh "swift package --allow-writing-to-package-directory #{command}"
+  rescue
+    exitCode = $?.exitstatus
+  ensure
+    # Revert the changes to Package.swift
+    File.write('Package.swift', packageDefinition)
+    File.delete('Package.resolved')
+  end
+
+  exit exitCode
 end
