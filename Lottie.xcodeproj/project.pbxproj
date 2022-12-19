@@ -44,7 +44,7 @@
 		2E450DAE283415D500E56D19 /* OpacityAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E450DAB283415D500E56D19 /* OpacityAnimation.swift */; };
 		2E72128327BB329C0027BC56 /* AnimationKeypathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72128227BB329C0027BC56 /* AnimationKeypathTests.swift */; };
 		2E72128527BB32DB0027BC56 /* PerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E72128427BB32DB0027BC56 /* PerformanceTests.swift */; };
-		2E8040B027A072B8006E74CB /* LottieSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E80409A27A0725D006E74CB /* LottieSwift.framework */; };
+		2E8040B027A072B8006E74CB /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E80409A27A0725D006E74CB /* Lottie.framework */; };
 		2E8044AD27A07347006E74CB /* HardcodedImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8040BE27A07343006E74CB /* HardcodedImageProvider.swift */; };
 		2E8044AE27A07347006E74CB /* Snapshotting+presentationLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8040BF27A07343006E74CB /* Snapshotting+presentationLayer.swift */; };
 		2E80450D27A07347006E74CB /* SnapshotConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E80412527A07343006E74CB /* SnapshotConfiguration.swift */; };
@@ -676,8 +676,8 @@
 		2E450DAB283415D500E56D19 /* OpacityAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpacityAnimation.swift; sourceTree = "<group>"; };
 		2E72128227BB329C0027BC56 /* AnimationKeypathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationKeypathTests.swift; sourceTree = "<group>"; };
 		2E72128427BB32DB0027BC56 /* PerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceTests.swift; sourceTree = "<group>"; };
-		2E80409A27A0725D006E74CB /* LottieSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LottieSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E8040AC27A072B8006E74CB /* LottieSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LottieSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E80409A27A0725D006E74CB /* Lottie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lottie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E8040AC27A072B8006E74CB /* LottieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LottieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E8040BE27A07343006E74CB /* HardcodedImageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HardcodedImageProvider.swift; sourceTree = "<group>"; };
 		2E8040BF27A07343006E74CB /* Snapshotting+presentationLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Snapshotting+presentationLayer.swift"; sourceTree = "<group>"; };
 		2E80412527A07343006E74CB /* SnapshotConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotConfiguration.swift; sourceTree = "<group>"; };
@@ -820,8 +820,8 @@
 		2E9C95D02822F43100677516 /* KeyframeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyframeExtensions.swift; sourceTree = "<group>"; };
 		2E9C95D22822F43100677516 /* AnimationContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationContext.swift; sourceTree = "<group>"; };
 		2EAF59A627A076BC00E00531 /* Bundle+Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Module.swift"; sourceTree = "<group>"; };
-		2EAF59AD27A0787B00E00531 /* LottieSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LottieSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2EAF59B927A078E400E00531 /* LottieSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LottieSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EAF59AD27A0787B00E00531 /* Lottie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lottie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EAF59B927A078E400E00531 /* Lottie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lottie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EAF59C327A0798700E00531 /* BundleImageProvider.macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleImageProvider.macOS.swift; sourceTree = "<group>"; };
 		2EAF59C427A0798700E00531 /* LottieAnimationViewBase.macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieAnimationViewBase.macOS.swift; sourceTree = "<group>"; };
 		2EAF59C527A0798700E00531 /* AnimationSubview.macOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationSubview.macOS.swift; sourceTree = "<group>"; };
@@ -902,7 +902,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D0E635F28246BD0007C5DB6 /* Difference in Frameworks */,
-				2E8040B027A072B8006E74CB /* LottieSwift.framework in Frameworks */,
+				2E8040B027A072B8006E74CB /* Lottie.framework in Frameworks */,
 				2E804A1A27A0740F006E74CB /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -936,10 +936,10 @@
 		2E80409B27A0725D006E74CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2E80409A27A0725D006E74CB /* LottieSwift.framework */,
-				2E8040AC27A072B8006E74CB /* LottieSwiftTests.xctest */,
-				2EAF59AD27A0787B00E00531 /* LottieSwift.framework */,
-				2EAF59B927A078E400E00531 /* LottieSwift.framework */,
+				2E80409A27A0725D006E74CB /* Lottie.framework */,
+				2E8040AC27A072B8006E74CB /* LottieTests.xctest */,
+				2EAF59AD27A0787B00E00531 /* Lottie.framework */,
+				2EAF59B927A078E400E00531 /* Lottie.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1665,9 +1665,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		2E80409927A0725D006E74CB /* LottieSwift-iOS */ = {
+		2E80409927A0725D006E74CB /* Lottie-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2E8040A127A0725D006E74CB /* Build configuration list for PBXNativeTarget "LottieSwift-iOS" */;
+			buildConfigurationList = 2E8040A127A0725D006E74CB /* Build configuration list for PBXNativeTarget "Lottie-iOS" */;
 			buildPhases = (
 				2E80409527A0725D006E74CB /* Headers */,
 				2E80409627A0725D006E74CB /* Sources */,
@@ -1682,12 +1682,12 @@
 			packageProductDependencies = (
 			);
 			productName = Lottie;
-			productReference = 2E80409A27A0725D006E74CB /* LottieSwift.framework */;
+			productReference = 2E80409A27A0725D006E74CB /* Lottie.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		2E8040AB27A072B8006E74CB /* LottieSwiftTests */ = {
+		2E8040AB27A072B8006E74CB /* LottieTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2E8040B327A072B8006E74CB /* Build configuration list for PBXNativeTarget "LottieSwiftTests" */;
+			buildConfigurationList = 2E8040B327A072B8006E74CB /* Build configuration list for PBXNativeTarget "LottieTests" */;
 			buildPhases = (
 				2E8040A827A072B8006E74CB /* Sources */,
 				2E8040A927A072B8006E74CB /* Frameworks */,
@@ -1698,18 +1698,18 @@
 			dependencies = (
 				2E8040B227A072B8006E74CB /* PBXTargetDependency */,
 			);
-			name = LottieSwiftTests;
+			name = LottieTests;
 			packageProductDependencies = (
 				2E804A1927A0740F006E74CB /* SnapshotTesting */,
 				6D0E635E28246BD0007C5DB6 /* Difference */,
 			);
 			productName = LottieTests;
-			productReference = 2E8040AC27A072B8006E74CB /* LottieSwiftTests.xctest */;
+			productReference = 2E8040AC27A072B8006E74CB /* LottieTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2EAF59AC27A0787B00E00531 /* LottieSwift-macOS */ = {
+		2EAF59AC27A0787B00E00531 /* Lottie-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2EAF59B127A0787B00E00531 /* Build configuration list for PBXNativeTarget "LottieSwift-macOS" */;
+			buildConfigurationList = 2EAF59B127A0787B00E00531 /* Build configuration list for PBXNativeTarget "Lottie-macOS" */;
 			buildPhases = (
 				2EAF59A827A0787B00E00531 /* Headers */,
 				2EAF59A927A0787B00E00531 /* Sources */,
@@ -1720,14 +1720,14 @@
 			);
 			dependencies = (
 			);
-			name = "LottieSwift-macOS";
+			name = "Lottie-macOS";
 			productName = "Lottie-macOS";
-			productReference = 2EAF59AD27A0787B00E00531 /* LottieSwift.framework */;
+			productReference = 2EAF59AD27A0787B00E00531 /* Lottie.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		2EAF59B827A078E400E00531 /* LottieSwift-tvOS */ = {
+		2EAF59B827A078E400E00531 /* Lottie-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2EAF59BD27A078E400E00531 /* Build configuration list for PBXNativeTarget "LottieSwift-tvOS" */;
+			buildConfigurationList = 2EAF59BD27A078E400E00531 /* Build configuration list for PBXNativeTarget "Lottie-tvOS" */;
 			buildPhases = (
 				2EAF59B427A078E400E00531 /* Headers */,
 				2EAF59B527A078E400E00531 /* Sources */,
@@ -1738,9 +1738,9 @@
 			);
 			dependencies = (
 			);
-			name = "LottieSwift-tvOS";
+			name = "Lottie-tvOS";
 			productName = "Lottie-tvOS";
-			productReference = 2EAF59B927A078E400E00531 /* LottieSwift.framework */;
+			productReference = 2EAF59B927A078E400E00531 /* Lottie.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -1767,7 +1767,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2E80409427A0725D006E74CB /* Build configuration list for PBXProject "LottieSwift" */;
+			buildConfigurationList = 2E80409427A0725D006E74CB /* Build configuration list for PBXProject "Lottie" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1784,10 +1784,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2E80409927A0725D006E74CB /* LottieSwift-iOS */,
-				2EAF59AC27A0787B00E00531 /* LottieSwift-macOS */,
-				2EAF59B827A078E400E00531 /* LottieSwift-tvOS */,
-				2E8040AB27A072B8006E74CB /* LottieSwiftTests */,
+				2E80409927A0725D006E74CB /* Lottie-iOS */,
+				2EAF59AC27A0787B00E00531 /* Lottie-macOS */,
+				2EAF59B827A078E400E00531 /* Lottie-tvOS */,
+				2E8040AB27A072B8006E74CB /* LottieTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2493,7 +2493,7 @@
 /* Begin PBXTargetDependency section */
 		2E8040B227A072B8006E74CB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2E80409927A0725D006E74CB /* LottieSwift-iOS */;
+			target = 2E80409927A0725D006E74CB /* Lottie-iOS */;
 			targetProxy = 2E8040B127A072B8006E74CB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2641,8 +2641,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-iOS";
-				PRODUCT_NAME = LottieSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_NAME = Lottie;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2670,8 +2670,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-iOS";
-				PRODUCT_NAME = LottieSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_NAME = Lottie;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2738,8 +2738,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-macOs";
-				PRODUCT_NAME = LottieSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_NAME = Lottie;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2768,8 +2768,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-macOs";
-				PRODUCT_NAME = LottieSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_NAME = Lottie;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2796,8 +2796,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-tvOS";
-				PRODUCT_NAME = LottieSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_NAME = Lottie;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2826,8 +2826,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.airbnb.Lottie-tvOS";
-				PRODUCT_NAME = LottieSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airbnb.Lottie;
+				PRODUCT_NAME = Lottie;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2840,7 +2840,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2E80409427A0725D006E74CB /* Build configuration list for PBXProject "LottieSwift" */ = {
+		2E80409427A0725D006E74CB /* Build configuration list for PBXProject "Lottie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2E80409F27A0725D006E74CB /* Debug */,
@@ -2849,7 +2849,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2E8040A127A0725D006E74CB /* Build configuration list for PBXNativeTarget "LottieSwift-iOS" */ = {
+		2E8040A127A0725D006E74CB /* Build configuration list for PBXNativeTarget "Lottie-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2E8040A227A0725D006E74CB /* Debug */,
@@ -2858,7 +2858,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2E8040B327A072B8006E74CB /* Build configuration list for PBXNativeTarget "LottieSwiftTests" */ = {
+		2E8040B327A072B8006E74CB /* Build configuration list for PBXNativeTarget "LottieTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2E8040B427A072B8006E74CB /* Debug */,
@@ -2867,7 +2867,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2EAF59B127A0787B00E00531 /* Build configuration list for PBXNativeTarget "LottieSwift-macOS" */ = {
+		2EAF59B127A0787B00E00531 /* Build configuration list for PBXNativeTarget "Lottie-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2EAF59B227A0787B00E00531 /* Debug */,
@@ -2876,7 +2876,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2EAF59BD27A078E400E00531 /* Build configuration list for PBXNativeTarget "LottieSwift-tvOS" */ = {
+		2EAF59BD27A078E400E00531 /* Build configuration list for PBXNativeTarget "Lottie-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2EAF59BE27A078E400E00531 /* Debug */,
