@@ -769,8 +769,6 @@ open class LottieAnimationView: LottieAnimationViewBase {
             return false
         }
         subview.clipsToBounds = true
-        self.setNeedsLayout()
-        self.layoutIfNeeded()
         self.forceDisplayUpdate()
         addSubview(subview)
         if let subViewLayer = subview.viewLayer {
