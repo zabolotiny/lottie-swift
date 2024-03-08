@@ -5,7 +5,6 @@
 //  Created by Brandon Withrow on 1/30/19.
 //
 
-import Foundation
 import QuartzCore
 
 /// A rendered for a Path Fill
@@ -104,7 +103,8 @@ final class LegacyGradientFillRenderer: PassThroughOutputNode, Renderable {
           bitsPerComponent: 8,
           bytesPerRow: inContext.width,
           space: maskColorSpace,
-          bitmapInfo: 0) else { return }
+          bitmapInfo: 0)
+      else { return }
       let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(maskContext.height))
       maskContext.concatenate(flipVertical)
       maskContext.concatenate(inContext.ctm)
@@ -132,7 +132,7 @@ final class LegacyGradientFillRenderer: PassThroughOutputNode, Renderable {
     /// Now draw the gradient
     guard
       let gradient = CGGradient(
-        colorsSpace: CGColorSpaceCreateDeviceRGB(),
+        colorsSpace: LottieConfiguration.shared.colorSpace,
         colors: gradientColors as CFArray,
         locations: colorLocations)
     else { return }
