@@ -248,6 +248,11 @@ open class LottieAnimationView: LottieAnimationViewBase {
     lottieAnimationLayer.play(fromProgress: fromProgress, toProgress: toProgress, loopMode: loopMode, completion: completion)
   }
 
+  //Full keypath array
+  open func findFullKeypaths(with key: String) -> [String]? {
+      return animationLayer?.findFullKeypaths(with: key)
+  }
+
   /// Plays the animation from a start frame to an end frame in the animation's framerate.
   ///
   /// - Parameter fromFrame: The start frame of the animation. If `nil` the animation will start at the current frame.
